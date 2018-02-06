@@ -5,7 +5,7 @@ Para levantar el contenedor primero habra que generar la imagen:
   
 para lenvantar el contenedor en si debera escribirse en la consola:
  >  docker run -p 3979:3979 -d <NOMBRE DE LA IMAGEN>
-###### English version
+#### English version
 
 
 to run the docker you will have to build the image:
