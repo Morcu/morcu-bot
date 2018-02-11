@@ -1,3 +1,8 @@
+DB_MOVIE_DATA="movie_data"
+DB_MD_TILE_INFO="title_info"
+DB_MD_PEOPLE_INFO="people_info"
+
+
 FILE_FILMS="title.tsv"
 FILE_NAMES="name.tsv"
 FILE_ACTORS="actor.tsv"
@@ -9,6 +14,7 @@ FILE_RATING="id_peli_votos.tsv"
 
 ACTORS="actors"
 
+CONTENT_ID="content_id"
 NAME="name"
 BIRTH="birth"
 DEATH="death"
@@ -17,7 +23,7 @@ FILMS="films"
 
 TYPE="type"
 SHORT_TITLE="shortTitle"
-TITLE="TITLE"
+TITLE="title"
 IS_ADULT="isAdult"
 START_YEAR="startYear"
 END_YEAR="endYear"
@@ -33,3 +39,5 @@ EPISODE="episode"
 
 RATING="rating"
 VOTES="votes"
+
+PEOPLE_ID="people_id"
