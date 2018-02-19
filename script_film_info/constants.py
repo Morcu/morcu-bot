@@ -1,8 +1,14 @@
+# -*- coding: utf-8 -*
+
 DB_MOVIE_DATA="movie_data"
 DB_MD_TILE_INFO="title_info"
 DB_MD_PEOPLE_INFO="people_info"
 
 
+MONGO_PORT=27017
+MONGO_URL='localhost'
+
+#TODO change this values to real ones
 FILE_FILMS="title.tsv"
 FILE_NAMES="name.tsv"
 FILE_ACTORS="actor.tsv"

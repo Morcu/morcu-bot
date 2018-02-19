@@ -1,1 +1,4 @@
 .env
+.idea
+/bot/node_modules
+/bot/package-lock.json

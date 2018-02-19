@@ -1,18 +1,28 @@
-import csv
+# -*- coding: utf-8 -*
+
 import json
 import constants as cons
 from pymongo import MongoClient
+import asyncio
+import requests
+import pandas as pd
 
 def main():
 
-  client = MongoClient('localhost', 27017)
+  #Cliente Mongo
+  client = MongoClient(cons.MONGO_URL, cons.MONGO_PORT)
   db = client[cons.DB_MOVIE_DATA]
   db_title_info = db[cons.DB_MD_TILE_INFO]
   db_people_info = db[cons.DB_MD_PEOPLE_INFO]
-  
+
+  #Bucle de eventos para las llamadas asincronas
+  loop = asyncio.get_event_loop()
+  loop.run_until_complete(download_files())
+
   #Peliculas
-  args = [[cons.CONTENT_ID, False],[cons.TYPE, False],[cons.SHORT_TITLE, False],[cons.TITLE, False],[cons.IS_ADULT, False],
-          [cons.START_YEAR, False],[cons.END_YEAR, False],[cons.DURATION, False],[cons.GENRES, True]]
+  args = [[cons.CONTENT_ID, False],[cons.TYPE, False],[cons.SHORT_TITLE, False],[cons.TITLE, False],
+          [cons.IS_ADULT, False],[cons.START_YEAR, False],[cons.END_YEAR, False],[cons.DURATION, False],
+          [cons.GENRES, True]]
   peliculas = extract(cons.FILE_FILMS, args)
   
   #Rating
@@ -50,8 +60,13 @@ def main():
 
 
 
-#Los objetos pasan por referencia, por lo que no es necesario return
 def update_field(obj, update):
+  '''
+  Funcion que actualiza los campos de un diccionario
+  :param obj: Diccionario a modificar
+  :param update: Claves a modificar
+  :return: No necesita ya que los objetos pasan por referencia
+  '''
   for upd in update:
     try:
       obj[upd].update(update[upd])
@@ -59,20 +74,53 @@ def update_field(obj, update):
       print(upd + ' not found')
 
 def extract(file, args):
-  with open(file) as tsvfile:
-    reader = csv.reader(tsvfile, delimiter='\t')
-    dict = {}
-    for row in reader:
-      dict[row[0]] = {}
-      cont = 0
-      for el in args:
-        data = arr_conv(row[cont]) if el[1] else row[cont]
-        upd = {
-          el[0]: data
-        }
-        dict[row[0]].update(upd)
-        cont += 1
+  '''
+  Funcion que dado un fichero comprimido en gz lo abre y genera un diccionario
+  :param file: Nombre del archivo
+  :param args: Array Bidimensional con las claves para el diccionario de salida y
+              un booleano para indicar si es necesario modificar los datos de string separado por comas a array
+              (Valores:
+                False --> No necesario
+                True --> Necesario
+  :return: Diccionario con las clave:valor correspondientes
+  '''
+  data = pd.read_csv(file, compression='gzip',
+                     error_bad_lines=False, sep='\t')
+
+  reader = data.values
+  dict = {}
+  for row in reader:
+    dict[row[0]] = {}
+    cont = 0
+    for el in args:
+      data = arr_conv(row[cont]) if el[1] else row[cont]
+      upd = {
+        el[0]: data
+      }
+      dict[row[0]].update(upd)
+      cont += 1
   return dict
+
+
+async def download_files():
+
+  loop = asyncio.get_event_loop()
+
+  tasks = []
+  urls = [
+    'https://datasets.imdbws.com/title.ratings.tsv.gz'
+  ]
+  names = []
+  for url in urls:
+    tasks.append(loop.run_in_executor(None, requests.get, url))
+    names.append(url.split("/")[-1])
+  responses = await asyncio.gather(*tasks, loop=loop)
+  for iterator in range(len(names)):
+    with open(names[iterator], "wb") as f:
+      f.write(responses[iterator].content)
+      f.close()
+
+
 
 def pretty_print(data):
    print(json.dumps(data, sort_keys=True,indent=4))
@@ -82,3 +130,4 @@ def arr_conv(txt):
 
 if __name__== "__main__":
   main()
+
