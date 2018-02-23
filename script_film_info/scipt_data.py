@@ -15,9 +15,20 @@ def main():
   db_title_info = db[cons.DB_MD_TILE_INFO]
   db_people_info = db[cons.DB_MD_PEOPLE_INFO]
 
+  #Urls donde estan los archivos
+  urls = [
+    cons.URL_FILE_FILMS,
+    cons.URL_FILE_NAMES,
+    cons.URL_FILE_ACTORS,
+    cons.URL_FILE_DIRECTOR,
+    cons.URL_FILE_EPISODES,
+    cons.URL_FILE_FILM_INFO,
+    cons.URL_FILE_RATING
+  ]
+
   #Bucle de eventos para las llamadas asincronas
-  loop = asyncio.get_event_loop()
-  loop.run_until_complete(download_files())
+  #loop = asyncio.get_event_loop()
+  #loop.run_until_complete(download_files(urls))
 
   #Peliculas
   args = [[cons.CONTENT_ID, False],[cons.TYPE, False],[cons.SHORT_TITLE, False],[cons.TITLE, False],
@@ -49,16 +60,50 @@ def main():
   episodes = extract(cons.FILE_EPISODES, args)
 
   update_field(peliculas, episodes)
-  
-  title_ins = db_title_info.insert_many(peliculas.values())
+
 
   #Personas
   args = [[cons.PEOPLE_ID, False],[cons.NAME, False],[cons.BIRTH, False],[cons.DEATH, False],[cons.PROFESSION, True],[cons.FILMS, True]]
   personas = extract(cons.FILE_NAMES, args)
-  
-  people_ins = db_people_info.insert_many(personas.values())
+
+  update_field_to_clear(peliculas,cons.ACTORS,personas)
+  update_field_to_clear(peliculas, cons.DIRECTOR, personas)
+  update_field_to_clear(peliculas, cons.WRITER, personas)
+
+  update_field_to_clear(personas, cons.FILMS, peliculas)
+
+  print(json.dumps(personas, indent=4, sort_keys=True))
 
 
+
+  #title_ins = db_title_info.insert_many(peliculas.values())
+  #people_ins = db_people_info.insert_many(personas.values())
+
+
+def update_field_to_clear(obj, key, pers_info):
+
+  for elem in obj.values():
+    if key in elem:
+      elem[key] = list(map(lambda name:
+        compose_name(name,pers_info)
+      , elem[key]))
+
+
+
+def compose_name(name, pers_info):
+  ret = None
+  if name != "\\N":
+    try:
+      ret ={
+        "id": name,
+        "name": pers_info[name]["name"]
+      }
+    except:
+      ret ={
+        "id": name,
+        "name": "Nombre desconocido"
+      }
+  return ret
 
 def update_field(obj, update):
   '''
@@ -102,19 +147,19 @@ def extract(file, args):
   return dict
 
 
-async def download_files():
+async def download_files(urls):
 
   loop = asyncio.get_event_loop()
 
   tasks = []
-  urls = [
-    'https://datasets.imdbws.com/title.ratings.tsv.gz'
-  ]
+
   names = []
   for url in urls:
+    print("start + " + url)
     tasks.append(loop.run_in_executor(None, requests.get, url))
     names.append(url.split("/")[-1])
   responses = await asyncio.gather(*tasks, loop=loop)
+  print("Done")
   for iterator in range(len(names)):
     with open(names[iterator], "wb") as f:
       f.write(responses[iterator].content)
