@@ -1,4 +1,6 @@
 .env
 .idea
-/bot/node_modules
-/bot/package-lock.json
+/bottfg/node_modules
+/bottfg/package-lock.json
+/bottfg/.env
+/bottfg/lib
