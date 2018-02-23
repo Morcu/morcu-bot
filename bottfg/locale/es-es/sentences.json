@@ -1,0 +1,36 @@
+{
+    "sampleUses" : {
+        "text": [ 
+            "uno",
+            "otro",
+            "otro más"
+        ],
+        "desc": "una descripción del sentido de la frase"
+    },
+    "saludos" : {
+        "text": [ 
+            "Hola",
+            "Buenas",
+            "Holi",
+            "Hola soy MorcuBot"
+        ],
+        "desc": "una descripción del sentido de la frase"
+    },
+
+    "misunderstood": {
+        "text": [
+            "Perdona, %s, parece que no te he entendido bien, ¿Puedes decírmelo con otras palabras?",
+            "Creo que hay algo que no he entendido. ¿Te importa repetírmelo de otra forma?",
+            "No te sigo. ¿Qué quieres decir?",
+            "A veces no entiendo a los humanos. ¿Qué querías decir?",
+            "Estoy saturado: eso último no lo he pillado 😅",
+            "Yo no entender 😅 ¿Puedes decírmelo de otra forma?",
+            "Perdona, %s, no he entendido tu expresión 😅 ¿Qué decías?"
+        ],
+        "desc": "una descripción del sentido de la frase",
+        "meta": {
+            "addSampleUses": true
+        }
+    }
+
+}

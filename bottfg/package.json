@@ -1,0 +1,43 @@
+{
+  "name": "TFG-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/app.js",
+  "types": "./lib/app.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "shx rm -fR ./lib",
+    "compile": "tsc",
+    "lint": "tslint './src/**/*.ts'",
+    "watch": "tsc -w",
+    "dev": "npm run build && npm run watch",
+    "start": "node lib/app.js",
+    "start:live": "npm run build:live",
+    "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@telefonica/bot-core": "^3.0.0",
+    "dotenv": "^2.0.0",
+    "jsonfile": "^3.0.0",
+    "logops": "^1.0.7",
+    "request": "^2.79.0",
+    "request-promise": "4.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^9.4.1",
+    "@types/dotenv": "^2.0.19",
+    "@types/request": "0.0.36",
+    "@types/request-promise": "4.1.33",
+    "nodemon": "^1.14.12",
+    "shx": "^0.2.2",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.1"
+  },
+  "engines": {
+    "node": ">=6"
+  }
+}
