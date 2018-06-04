@@ -1,0 +1,440 @@
+[
+  {
+    "id": "INFANTIL",
+    "synonyms": [
+        "infantil", "infantiles", "niños", "niñas", "peque", "peques" , "dibujos", "niño", "niña", "dibus", "enanos", "enano",
+        "comedias infantiles", "comedias niños", "comedias niñas", 
+        "enana", "enanas"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "FAMILIAR",
+    "synonyms": [
+        "hijo", "hija", "hijos", "hijas", "sobrinos", "sobrino", "familia", "familiar", "chicos", "chicas", "niños mayores", "niñas mayores", "niño mayor", "niña mayor"
+    ],
+    "equivalent": ["CINE FAMILIAR", "SITCOM FAMILIAR", "AVENTURAS"],
+    
+    "related": [
+    ]
+  },
+  {
+    "id": "INFANTIL_FAMILIAR",
+    "synonyms": [
+        "infantil familiar", "familiar infantil" 
+    ],
+    "equivalent": ["INFANTIL", "CINE FAMILIAR", "SITCOM FAMILIAR"],
+    "related": [
+    ]
+  },
+  {
+    "id": "COMEDIAS_FAMILIARES",
+    "synonyms": [
+        "comedias familiares", "comedia familiar", "comedias familia"
+    ],
+    "equivalent": [ "COMEDIA", "CINE FAMILIAR", "SITCOM FAMILIAR"],
+    "related": [
+    ]
+  },
+  {
+    "id": "ANIMACION",
+    "synonyms": [
+   	"animacion"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "COMEDIA",
+    "synonyms": [
+        "comedia", "risa", "risas", "humor", "comedias" , "reirme" , "agradable", "divertido", "divertida", "divertidos", "divertidas", "alegres", "alegre", "alegren",
+        "comeida", "comeidas"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "DRAMA",
+    "synonyms": [
+        "drama", "dramatica", "triste", "tristes", "dramas", "dramaticas", "dramon", "dramones"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "TERROR",
+    "synonyms": [
+        "terror", "miedo", "panico", "miedos", "terrores", "panicos"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "AVENTURAS",
+    "synonyms": [
+        "aventura", "aventuras"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "ACCION",
+    "synonyms": [
+        "accion", "intensa", "bizarra", "tiros",
+        "acion"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "ACCION_Y_AVENTURAS",
+    "synonyms": ["accion aventuras", "accion aventura",
+                 "acion aventura", "aventuras acion",
+                 "acion aventuras", "aventuras acion"
+    ],
+    "equivalent": [ "ACCION", "AVENTURAS"],
+    "related": [
+    ]
+  },
+  
+  {
+    "id": "FICCION_Y_AVENTURAS",
+    "synonyms": ["ficcion aventuras", "aventuras ficcion",
+		"ficion aventuras", "aventuras ficion"
+
+    ],
+    "equivalent": [ "CIENCIA FICCION", "AVENTURAS"],
+    "related": [
+    ]
+  },
+  {
+    "id": "CIENCIA FICCION",
+    "synonyms": [
+        "ficcion", "ireal", "irreal", "extraterrestres", "aliens", "marcianos", 
+        "espacio", "futuro", "friki", "ciencia ficcion",
+        "ficion", "ciencia ficion"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "DISTOPIA",
+    "synonyms": [
+        "distopia", "distopico", "distopica" 
+    ],
+    "related": [
+    ],
+    "alternative": [
+        "CIENCIA FICCION"
+    ]
+  },
+  {
+    "id": "ROBOTS",
+    "synonyms": [
+        "robot", "robotica", "robots" 
+    ],
+    "related": [
+    ],
+    "alternative": [
+	"CIENCIA FICCION"
+    ]
+  },
+  {
+    "id": "ROMANCE",
+    "synonyms": [
+        "romantica", "romanticas", "llorar", "lagrimas", "lacrimojena", "llorera", 
+        "melancolica", "melancolicas", "melancolia", "amor", "amores", "amorios", "love", 
+        "romantico", "romanticos"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "PAREJA",
+    "synonyms": [
+        "novio", "novia", "pareja"
+    ],
+    "equivalent": [ "COMEDIA", "ROMANCE"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "AMIGOS",
+    "synonyms": [
+        "amigo", "amiga", "amigos", "amigas", "colega", "colegas"
+    ],
+    "equivalent": [ "COMEDIA", "ACCION", "AVENTURAS"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "DEPORTE",
+    "synonyms": [
+        "deportes", "deporte", "deportivo", "deportivos", "deportiva", "deportivas"
+    ],
+    "clearTopic": true,
+    "related": [
+    ]
+  },
+  {
+    "id": "DOCUMENTAL",
+    "synonyms": [
+        "documental", "documentales", "cultura", "aprender", "cultural", "culturizarme", "cultirizar"
+    ],
+    "clearTopic": true,
+    "related": [
+    ]
+  },
+  {
+    "id": "ENTRETENIMIENTO",
+    "synonyms": [
+        "entretenimiento", "entretenida", "entretenerme", "entretenernos", 
+        "entretenerlas", "entretenerlos", "desconectar", "relajarme", "descansar", 
+        "olvidarme", "olvidar", "relajarse", "buena", "buenas"
+    ],
+    "equivalent": ["COMEDIA", "ACCION", "AVENTURAS"],
+    "clearTopic": true,
+    "related": [
+    ]
+  },
+  {
+    "id": "PENSAR",
+    "synonyms": [
+        "pensar", "rara", "complicada", "trama", "reflexionar"
+    ],
+    "equivalent": [ "ENSEÑANZA", "INTRIGA", "CRIMEN", "VIAJES TIEMPO"],
+    "related": [
+    ]
+  },
+  {
+    "id": "CLASICA",
+    "synonyms": [
+        "clasicas", "antiguas", "clasico", "clasica", "antigua", "clasicos cine", "clasicos"
+    ],
+    "equivalent": ["CULTO", "AÑOS_90", "AÑOS_80", "AÑOS_70", "AÑOS_60"],
+    "related": [
+    ]
+  },
+  {
+    "id": "WESTERN",
+    "synonyms": [
+        "western", "spaghetti western", "oeste", "vaqueros", "lejano oeste", "indios", "indio", "vaquero",
+        "vaqueros", "pistolero", "pistoleros"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "INTRIGA",
+    "synonyms": [
+        "suspense", "intriga", "thriller", "suspenses", "intrigas"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "POLICIACO",
+    "synonyms": [
+        "policias", "policia", "polis", "policiaco", "policiacos", "policiaca", "policiacas"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "ENGANCHARME",
+    "synonyms": [
+        "engancharme", "enganche", "enganchen", "engancharnos"
+    ],
+    "equivalent": ["ACCION", "AVENTURA", "INTRIGA"],
+    "related": [
+    ]
+  },
+  {
+    "id": "BASADO EN HECHOS REALES",
+    "synonyms": [
+        "basado hechos reales", "hecho real", "hechos reales", "real", "reales"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "SERIE TV",
+    "synonyms": [
+        "serie tv"
+    ],
+    "clearTopic": true,
+    "related": [
+    ]
+  },
+  {
+    "id": "MINISERIE DE TV",
+    "synonyms": [
+        "miniserie tv"
+    ],
+    "clearTopic": true,
+    "related": [
+        
+    ]
+  },
+  {
+    "id": "VIVIR OTRA REALIDAD",
+    "synonyms": [
+	"vivir otra realidad", "ciencia ficcion fantastico"
+    ],
+    "equivalent": [ "CIENCIA FICCION", "FANTÁSTICO"],
+    "related": [
+    ]
+  },
+  {
+    "id": "MARVEL COMICS",
+    "synonyms": [
+        "marvel comics", "comics marvel", "marver comic"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "DC COMICS",
+    "synonyms": [
+        "dc comics", "dc comic"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "GUERRA",
+    "synonyms": [
+        "belico", "belica", "belicas", "guerra", "guerras"
+    ],
+    "equivalent": ["BÉLICO","I GUERRA MUNDIAL", "II GUERRA MUNDIAL", "GUERRA DE VIETNAM", "GUERRA CIVIL ESPAÑOLA"],
+    "related": [
+    ]
+  },
+  {
+    "id": "GUERRA FRIA",
+    "synonyms": [
+        "guerra fria"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "II GUERRA MUNDIAL",
+    "synonyms": [
+        "segunda guerra mundial"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "THRILLER PSICOLOGICO",
+    "synonyms": [
+        "thriller psicologico", "thrillers psicologicos",
+        "triller psicologico", "trillers psicologicos",
+        "triler psicologico", "trilers psicologicos",
+        "thriler psicologico", "thrilers psicologicos",
+        "thriller sicologico", "thrillers sicologicos",
+        "triller sicologico", "trillers sicologicos",
+        "thriler sicologico", "thrilers sicologicos",
+        "triler sicologico", "trilers sicologicos",
+        "thiller sicologico", "thillers sicologicos"
+
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "DRAMA ROMANTICO",
+    "synonyms": [
+        "drama romantico", "dramas romanticos"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "COMEDIA ROMANTICA",
+    "synonyms": [
+        "comedia romantica", "comedias romanticas"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "COMEDIA DRAMATICA",
+    "synonyms": [
+        "comedia dramatica", "comedias dramaticas", 
+        "comedias dramatica", "comedia dramaticas"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "SUPER HEROES",
+    "synonyms": [
+        "super heroe", "super heroes"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "ZOMBIS",
+    "synonyms": [
+        "zombies", "zombi", "zomby", "muertos vivientes", "muerto viviente", "zombis"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "HOMBRES LOBO",
+    "synonyms": [
+        "hombre lobo", "hombres lobo", "hombres lobos", "licantropo", "hombre bestia", "hombres bestia"
+    ],
+    "related": [
+    ]
+  },
+  {
+    "id": "VAMPIROS",
+    "synonyms": [
+        "vampiro", "vampiros", "dracula", "chupasangre", "chupa sangre", "chupasangres", "chupa sangres"
+    ],
+    "related": [
+    ]
+  }, 
+  {
+    "id": "MONSTRUOS",
+    "synonyms": [
+        "monstruo", "monstruos", "mostruo", "mostruos"
+    ],
+    "equivalent": ["VAMPIROS", "HOMBRES LOBO", "ZOMBIS"],
+    "related": [
+    ]
+  },
+  {
+
+    "id": "CINE ESPAÑOL",
+    "synonyms": [
+        "cine español", "españolas", "español", "españoles", "española"
+
+    ],
+    "useMovistarAPI": true,
+    "topic": "CN.ESP",
+    "related": [
+    ]
+  },
+
+  {
+
+    "id": "CINE DE AUTOR",
+    "synonyms": [
+        "cine autor", "autor"
+
+    ],
+    "useMovistarAPI": true,
+    "topic": "CN-AUTOR",
+    "related": [
+    ]
+  }
+]

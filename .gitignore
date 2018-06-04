@@ -4,3 +4,6 @@
 /bottfg/package-lock.json
 /bottfg/.env
 /bottfg/lib
+/cognitive/lib
+/cognitive/node_modules
+/cognitive/package-lock.json

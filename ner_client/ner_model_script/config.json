@@ -1,0 +1,4 @@
+{
+  "model_file": "../data/datos.tsv",
+  "train_data": "train_data.json"
+}

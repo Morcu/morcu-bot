@@ -23,7 +23,7 @@ export interface IContentInteraction {
     contentInteraccion: {
         tipoRes: string,
         status: string,
-        desc: string,
+        desc: string
     };
 }
 

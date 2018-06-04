@@ -1,0 +1,418 @@
+{
+    "elements": {
+        "recientes": {
+            "expr": "(reciente[ \\?]|reciente$|recientes[ \\?]*)",
+            "time": "recientes",
+            "def": [
+                0,
+                -1
+            ],
+            "texDef": "peliculas",
+            "clean": true
+        },
+        "negaciones": {
+            "skip": false,
+            "base": "negaciones",
+            "intent" : "botcorn:tef.intent.recommendation.negation",
+            "args": { 
+                "type": "negaciones",
+                "catalogN": {
+                    "N1": [0, 1],
+                    "N2": [1],
+                    "N3": [0, 1],
+                    "N4": [0, 1],
+                    "N5": [1, 0],
+                    "N6": [1, 0]
+                },
+                "catalogE": {
+                    "E1": 2,
+                    "E2": 1,
+                    "E3": 1,
+                    "E4": 1,
+                    "E5": 1,
+                    "E6": 2
+                }
+            }
+        },
+        "basicos": {
+            "skip": false,
+            "base": "basicos",
+            "types": {
+                "feedback": "botcorn:tef.intent.recommendation.feedback",
+                "bye": "botcorn:tef.intent.recommendation.bye",
+                "greeting": "botcorn:tef.intent.recommendation.greeting"
+            },
+            "args": {
+                "type": "basicos"
+            }
+        },
+        "capturaLiteralesBye": {
+            "skip": true,
+            "literal": [
+                {
+                    "tipo": "bye",
+                    "literales": [
+                        "chao",
+                        "hasta luego",
+                        "hasta la vista",
+                        "gracias",
+                        "muchas gracias",
+                        "buenas noches",
+                        "ya tengo bastante gracias",
+                        "ok muchas gracias",
+                        "vale ya tengo suficiente",
+                        "no ya tengo bastante, gracias",
+                        "no gracias vamos a ver esta abuela es mi padre",
+                        "no gracias eso es todo",
+                        "gracias",
+                        "creo que voy a ver infiltrados",
+                        "gracias creo que voy a ver steve jobs",
+                        "gracias creo que voy a ver infiltrados",
+                        "la hora decisiva pinta bien gracias",
+                        "gracias voy a ver los juegos del hambre",
+                        "no eso es todo",
+                        "gracias creo que voy a ver el olivo",
+                        "no gracias vamos a ver matrix",
+                        "eso es todo gracias",
+                        "ok hasta luego",
+                        "no gracias vamos a ver star wars",
+                        "gracias creo que voy a ver truman",
+                        "gracias",
+                        "vale voy a ver las novias de mis amigos",
+                        "vale vere alicia a traves del espejo",
+                        "hasta pronto",
+                        "bye",
+                        "me voy",
+                        "hasta mañana",
+                        "adios",
+                        "en nada gracias",
+                        "no gracias",
+                        "nada mas",
+                        "saludos",
+                        "de momento no",
+                        "gracias adios",
+                        "gracias nada mas",
+                        "gracias voy a ver el puente de los espias",
+                        "ok voy a ver espias desde el aire",
+                        "no gracias probando el sistema unicamente",
+                        "ahora no necesito nada mas gracias",
+                        "nada mas gracias",
+                        "gracias probare mad men",
+                        "muchas gracias por la info",
+                        "mañana lo intentamos otra vez",
+                        "me voy a trabajar",
+                        "me voy a ver la tv",
+                        "gracias vere la serie",
+                        "vere la serie",
+                        "voy a ver juego de tronos",
+                        "voy a ver la tv",
+                        "voy a ver la tele",
+                        "me voy a ver la tele",
+                        "voy a verla",
+                        "voy a verlo",
+                        "creo que voy a ver esta",
+                        "creo que voy a ver star wars",
+                        "voy a ver survivor gracias",
+                        "voy a verla gracias",
+                        "gracias voy a ver survivor",
+                        "mañana nos vemos",
+                        "gracias voy a verla",
+                        "no hoy no tengo tiempo para ver nada",
+                        "no gracias hoy no tengo tiempo para ver nada",
+                        "no gracias hoy no tengo tiempo",
+                        "no gracias no tengo tiempo para ver nada",
+                        "no gracias no voy a ver nada",
+                        "mañana probaremos",
+                        "probaremos mañana",
+                        "vale gracias",
+                        "algo mala pero vale gracias",
+                        "algo antigua pero vale gracias",
+                        "esto es todo por hoy",
+                        "gracias y adios",
+                        "gracias esto es todo por hoy",
+                        "esto es todo por hoy gracias",
+                        "gracias eso es todo por hoy",
+                        "eso es todo por hoy gracias",
+                        "eso es todo por hoy",
+                        "hasta pronto majo",
+                        "gracias vere la pelicula",
+                        "vere la pelicula",
+                        "vere esta",
+                        "gracias ire a ver sobrenatural",
+                        "gracias ire a ver sobrenatural en la tv",
+                        "gracias ire a ver sobrenatural en la tele",
+                        "ire a ver en la tele",
+                        "vale ire a ver en la tele",
+                        "vale la vere",
+                        "gracias por la recomendacion",
+                        "muchas gracias por la recomendacion",
+                        "gracias la vere",
+                        "gracias ire a verla",
+                        "gracias probare mad men",
+                        "gracias probare con esta",
+                        "probare con esta",
+                        "probare con madmen",
+                        "probare madmen",
+                        "voy a ver survivor gracias por la recomendacion",
+                        "voy a ver la recomendacion",
+                        "gracias voy a ver survivor buena recomendacion",
+                        "gracias voy a ver la recomendacion",
+                        "buena seleccion adios",
+                        "buena seleccion hasta luego",
+                        "tendre que ver alguna de estas",
+                        "mañana mas",
+                        "dejalo voy a ver esta",
+                        "dejalo voy a ver que tal esta",
+                        "ya elegi gracias",
+                        "gracias ya elegi",
+                        "prefecto me la guardo para mas tarde",
+                        "me parece que vere kiki",
+                        "gracias mañana volvere",
+                        "mañana volvere",
+                        "volvere mañana",
+                        "hasta pronto majeton",
+                        "dejalo voy a ver la de robert de niro",
+                        "esta bien adios",
+                        "esta bien gracias",
+                        "bye bye",
+                        "ahora si",
+                        "es todo",
+                        "probare fargo gracias",
+                        "dejalo voy a ver la de robert de niro a ver que tal",
+                        "me voy a trabajar un rato saludos",
+                        "vere esta gracias",
+                        "esta esta bien gracias",
+                        "me voy a trabajar un rato",
+                        "gracias vere la peli",
+                        "vere esta serie",
+                        "vere esta pelicula",
+                        "esto es todo",
+                        "esto es todo gracias",
+                        "thanks"
+                    ]
+                }
+            ],
+            "intent": "botcorn:tef.intent.recommendation.bye",
+            "args": {
+                "type": "bye"
+            }
+        },
+        "capturaLiteralesHelp": {
+            "skip": false,
+            "literal": [
+                {
+                    "tipo": "help",
+                    "literales": [
+                        "hay alguna en la tele ahora",
+                        "que peliculas ponen hoy por la noche",
+                        "funcionas con series",
+                        "no me puedes ayudar con series",
+                        "que sabes hacer",
+                        "hay alguna forma de que el enlace de la peli que me propones se abra directamente en la app del ipad",
+                        "que pelicula se estrena el viernes en canal + estrenos",
+                        "no se como seguir",
+                        "que ponen hoy en la tele",
+                        "que echan hoy en la tele",
+                        "cuando echan el ultimo capitulo de modern family",
+                        "cuando echan la mascara",
+                        "que ponen hoy",
+                        "que echan hoy",
+                        "que echan hoy interesante",
+                        "como funciona esto",
+                        "sobre que contenidos funcionas",
+                        "cuentame un chiste"
+                    ]
+                }
+            ],
+            "intent": "botcorn:tef.intent.recommendation.help",
+            "args": {
+                "type": "help"
+            }
+        },
+        "capturaLiteralesDecision": {
+            "skip": false,
+            "literal": [
+                {
+                    "tipo": "decision",
+                    "literales": [
+                        "me ayudas",
+                        " csddddme gusta ninguna",
+                        "no me gusta nada",
+                        "tienes alguna otra cosa",
+                        "prefiero otras cosas",
+                        "no hay otra cosa",
+                        "tienes otra cosa",
+                        "esto no me gusta nada",
+                        "prefiero otra cosa",
+                        "hay otras cosas",
+                        "otra cosa",
+                        "hay otra cosa",
+                        "alguna otra cosa",
+                        "no me gusta ninguna, dame otra cosa",
+                        "sigue sin gustarme nada",
+                        "pues sigue sin gustarme",
+                        "nada",
+                        "pues no me ha gustado nada",
+                        "es de dibujos no me gusta",
+                        "no prefiero otra cosa",
+                        "no tienes otra cosa",
+                        "otra",
+                        "tengo un problema",
+                        "eso no me dice nada",
+                        "esa tampoco me gusta",
+                        "ayuda",
+                        "me has contestado con otro tema",
+                        "mostrar filtros",
+                        "mostrar filtro",
+                        "me entiendes",
+                        "yo creo que no",
+                        "esa pelicula no me gusta, es para niños",
+                        "ayudame",
+                        "entiendes algo de lo que te digo",
+                        "ayudame a buscar",
+                        "enseñame algo diferente",
+                        "me gustarian mas otras cosas",
+                        "no me gusta ninguna pelicula",
+                        "no me gusta ninguna dame mas opciones",
+                        "no me estas entendiendo",
+                        "help",
+                        "no se como seguir"
+                    ]
+                }
+            ],
+            "intent": "botcorn:tef.intent.recommendation.decision",
+            "args": {
+                "type": "decision"
+            }
+        },
+        "capturaLiteralesFeedback": {
+            "skip": true,
+            "literal": [
+                {
+                    "tipo": "positivo",
+                    "literales": [
+                        "genial",
+                        "bien genial",
+                        "me gustan",
+                        "Buena seleccion",
+                        "Ahora si",
+                        "ole",
+                        "esto era",
+                        "perfecto",
+                        "me gusta",
+                        "gracias me gusta",
+                        "perfecto",
+                        "acabo de verla",
+                        "perfecto me la guardo para mas tarde",
+                        "me guardo la recomendacion para mas tarde",
+                        "esta esta bien gracias",
+                        "esta esta bien adios",
+                        "vere esta pero no me convences nada",
+                        "me parecen muy buenas recomendaciones",
+                        "no esta mal",
+                        "muy bien",
+                        "esta esta bien",
+                        "esa esta bien",
+                        "esas estan bien",
+                        "esa me gusta",
+                        "esas me gustan",
+                        "esta me gusta",
+                        "estas me gustan"
+                    ]
+                },
+                {
+                    "tipo": "negativo",
+                    "literales": []
+                }
+            ],
+            "intent": "botcorn:tef.intent.recommendation.feedback",
+            "args": {
+                "type": "feedback"
+            }
+        },
+        "capturaLiteralesDefault": {
+            "skip": false,
+            "literal": [
+                {
+                    "tipo": "default",
+                    "literales": [
+                        "no te entiendo",
+                        "hacer una llamada de voz a chema",
+                        "venga so lento",
+                        "show my services",
+                        "aura cambia de canal"
+                    ]
+                }
+            ],
+            "intent": "botcorn:tef.intent.recommendation.default",
+            "args": {
+                "type": "default"
+            }
+        },
+        "capturaLiteralesGreeting": {
+            "skip": true,
+            "literal": [
+                {
+                    "tipo": "greeting",
+                    "literales": [
+                        "ey",
+                        "hola",
+                        "buenas tardes",
+                        "hola bot",
+                        "hi",
+                        "helo",
+                        "hello",
+                        "hey",
+                        "buenas botcorn",
+                        "ya has vuelto",
+                        "bien me gusta que hayas vuelto",
+                        "hola de nuevo",
+                        "hola otra vez",
+                        "buenas",
+                        "empezar",
+                        "hola botcorn",
+                        "hola",
+                        "hola esto es una prueba",
+                        "hoola",
+                        "holaaaa",
+                        "hola buenas",
+                        "buenos dias",
+                        "hola buenos dias",
+                        "hola que tla",
+                        "hola que tal",
+                        "hola bot que tal",
+                        "hola aqui estoy de nuevo",
+                        "hola botcorn q tal",
+                        "hola botcorn q tal estas",
+                        "hola botcorn que tal",
+                        "hola botcorn que tal estas",
+                        "como estas",
+                        "hola amigo",
+                        "hola tio",
+                        "hola figura",
+                        "hola crack",
+                        "hola amigo mio",
+                        "hola mi amigo"
+                    ]
+                }
+            ],
+            "intent": "botcorn:tef.intent.recommendation.greeting",
+            "args": {
+                "type": "greeting"
+            }
+        },
+        "capturaLiteralesOnboarding": {
+            "skip": false,
+            "literal": [
+                {
+                    "tipo": "onboarding",
+                    "literales": [
+                        "valorar mas pelis"
+                    ]
+                }
+            ],
+            "intent": "botcorn:tef.intent.recommendation.onboarding",
+            "args": {}
+        }
+    }
+}

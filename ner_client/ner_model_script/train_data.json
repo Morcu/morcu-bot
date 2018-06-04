@@ -1,0 +1,21 @@
+{
+  "intent": [
+    {
+      "tfg.intent.saludo": [
+        {
+          "frase": "serie %s actor %a dire %d pelicula %f, rep %r",
+          "parametros": [
+            {
+              "replace": "esto",
+              "entity": "ESTO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tfg.intent.find": [
+      ]
+    }
+  ]
+}

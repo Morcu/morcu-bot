@@ -1,0 +1,53 @@
+curl -X PUT \
+  http://localhost:6200/bctnew \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 5fc41352-3f7c-f7bb-cef3-bc50dc322d8e' \
+  -d '{
+  "settings": {
+    "analysis": {
+      "filter":{
+        
+        "spanish_stop": {
+          "type":        "stop",
+          "stopwords": [ "el", "la","los","las", "a", "de", "del" ]  
+        },
+        "light_spanish": { 
+          "type":     "stemmer",
+          "language": "light_spanish"
+        },
+        "unique_stem": {
+          "type": "unique",
+          "only_on_same_position": true
+        }
+      },
+      "analyzer": {
+        
+        "my_spanish": {
+          "tokenizer": "standard",
+          "filter": [ 
+            "unique_stem",
+            "spanish_stop",
+            "light_spanish"
+          ]
+        },
+         "stemmed_and_unstemmed": {
+            "type": "custom",
+            "tokenizer": "standard",
+           "filter": ["unique_stem", "spanish_stop"]
+        }
+      }
+    }
+  },
+  "mappings":{
+        "title":{
+          "properties": {
+            "titulo":{
+              "type":"text", 
+              "analyzer": "standard", 
+              "search_analyzer":"stemmed_and_unstemmed"
+            }
+          }
+        }
+      }
+}'

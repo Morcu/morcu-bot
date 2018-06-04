@@ -1,0 +1,22 @@
+/*
+TRAIN_DATA
+{
+  intent: [
+    {
+      "sentence": ----,
+      "parameters": [
+        {
+          "replace": ----,
+          "entity": ---,
+        }
+      ]
+    }
+  ]
+}
+*/
+
+%r --> replace
+%s --> serie
+%f --> film
+%a --> actor
+%d --> director

@@ -1,0 +1,41 @@
+version: '3.1'
+
+services:
+
+  elasticsearch:
+    image: elasticsearch
+    ports: 
+      - 9200:9200
+    volumes:
+      - /home/morcu/es_data/:/usr/share/elasticsearch/data
+  kibana:
+    image: kibana
+    ports:
+      - 5601:5601
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - /home/morcu/mongo_import_data/:/data/db
+  ner_client:
+    build: ner_client/.
+    ports: 
+      - 9191:9191
+  cognitive:
+    build: cognitive/.
+    ports:
+      - 6789:6789
+    links:
+      - "ner_client:ner"
+      - "elasticsearch:elastic"
+  bot:
+    build: bottfg/.
+    ports:
+      - 8080:8080
+    links:
+      - "mongo:mongodb"
+      - "ner_client:ner"
+
+
+      

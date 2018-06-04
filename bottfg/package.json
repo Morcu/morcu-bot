@@ -1,5 +1,5 @@
 {
-  "name": "TFG-bot",
+  "name": "bottfg",
   "version": "1.0.0",
   "description": "",
   "main": "./lib/app.js",
@@ -23,6 +23,7 @@
     "dotenv": "^2.0.0",
     "jsonfile": "^3.0.0",
     "logops": "^1.0.7",
+    "mongodb": "^3.0.4",
     "request": "^2.79.0",
     "request-promise": "4.1.1"
   },

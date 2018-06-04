@@ -21,7 +21,8 @@ import {
 } from './middlewares';
 
 let luisModel: any = {
-    'es-es': process.env.LUIS_MODEL__CORTANA_EUR_ES_ES
+    'es-es': process.env.LUIS_MODEL__CORTANA_EUR_ES_ES,
+    'es': process.env.LUIS_MODEL__CORTANA_EUR_ES_ES
 };
 
 // Create the bot
