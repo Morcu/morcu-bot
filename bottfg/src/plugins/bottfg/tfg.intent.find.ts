@@ -21,7 +21,7 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
         name: args.intent,
         entities: args.entities
     };
-
+    console.log(session.message.text);
     let actions = {
         name: 'a',
         type: 'a',
@@ -60,14 +60,14 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
             return elem_ch.entity;
         });
         console.log(values);
-        //const req_url = 'http://localhost:6789/cognitiveService/tit/';
+        //const req_url = 'http://localhost:6789/cognitiveService/ne/';
         const req_url = 'http://cognitive:6789/cognitiveService/ne/';
         const key = '4e894a5bee711efd3c75378759b6d3af';
         const language = 'es';
         const external_source = 'imdb_id';
         const find_url = 'https://api.themoviedb.org/3/find/';
         var options = {
-            uri: req_url + values[0],
+            uri: req_url + session.message.text,
             headers: {
                 'User-Agent': 'Request-Promise'
             },
@@ -76,9 +76,10 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
 
         rp(options)
             .then((data: any) => {
-                console.log(data.hits.hits[0]._source);
+                console.log('datos');
+                console.log(data);
                 let filt = data.hits.hits.filter((filt: any) => {
-                    return filt.cert > 0.75;
+                    return filt.cert > 0.75 || true;
                 });
                 let film = _.sortBy(filt, ['_source.startYear']).reverse();
                 console.log(film);
