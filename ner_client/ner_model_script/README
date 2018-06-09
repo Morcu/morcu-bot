@@ -20,3 +20,17 @@ TRAIN_DATA
 %f --> film
 %a --> actor
 %d --> director
+
+
+Script para escribir una frase dejando huecos indicados para la extraccion aleatoria de entidades en mongo y s
+
+
+La ejecucion de StanfordNER pasa por:
+
+
+
+
+
+
+Entrenamiento --> java -cp stanford-ner.jar edu.stanford.nlp.ie.crf.CRFClassifier -prop custom.prop
+Exponer un cliente para su uso --> java -mx2g -cp smx1500m -cp stanford-ner.jar edu.stanford.nlp.ie.NERServer -loadClassifier ner-model.ser.gz  -port 9191 -outputFormat inlineXML

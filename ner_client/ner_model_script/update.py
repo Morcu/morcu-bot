@@ -5,12 +5,13 @@ import random
 
 
 def main():
+    #configuracion de mongo y lectura de json
     conf = json.load(open("config.json"))
     train = json.load(open((conf["train_data"])))
     client = MongoClient('mongodb://localhost:27017')
     db = client["film_data"]
     for intents in train.values():
-        for intent in intents:
+        for intent in intents: #por cada intent
             for sentence in intent[list(intent.keys())[0]]:
                 try:
                     par = sentence["parametros"]
@@ -35,6 +36,9 @@ def tagg_to_model(str_tagged):
         return [str_tagged, "O"]
 
 def parse(frase, parametros, db):
+    '''
+        funcion que dada una frase taggea las palabras para ser entrenadas
+    '''
     aux = ["%r", "%f", "%s", "%a", "%d"]
     results = []
     for exp in aux:
@@ -56,12 +60,18 @@ def parse(frase, parametros, db):
 
 
 def tag(string, tag):
+    '''
+        añade los tags <tag> correspondientes a las palabras para ser entrenadas
+    '''
     tagged = ""
     for st in string.split(" "):
         tagged += "<"+ str(tag)+ ">" + str(st) + "</"+ str(tag)+ "> "
     return tagged
 
 def random_mongo(db, collection):
+    '''
+        extraccion aleatoria del mongo para el entrenamiento
+    '''
     if collection == "%f":
         db_coll = db['film']
         count = db_coll.count()
