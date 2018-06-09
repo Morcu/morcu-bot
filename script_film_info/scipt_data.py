@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*
 
+#imports
 import json
 
 import constants as cons
@@ -54,12 +55,15 @@ def extract_sys_args(arg):
 
 def main():
 
+    #argumentos extraidos para comprobar si hay que descargar, extraer de mongo o procesar
+
     download = extract_sys_args("-d")
     mongo = extract_sys_args("-m")
     process = extract_sys_args("-p")
 
     print(["-d: " + str(download), "-m: " + str(mongo), "-p: " + str(process)])
 
+    #Si es necesario extraer de mongo
     if mongo:
         #Cliente Mongo
         client = MongoClient(cons.MONGO_URL, cons.MONGO_PORT)
@@ -72,6 +76,7 @@ def main():
         db_act_info = db["actors"]
         db_dir_info = db["directors"]
 
+    #Si es necesario descargar los archivos
     if download:
         print("Start download")
         #Urls donde estan los archivos
@@ -91,6 +96,18 @@ def main():
 
         print("End download")
     print("Start process")
+
+    '''
+    process 0 --> process all
+    process 1 --> process peliculas
+    process 2 --> process rating
+    process 3 --> process actores
+    process 4 --> process directores
+    process 5 --> process episodios
+    process 6 --> process personas
+    
+    '''
+    #Si el acceso a base de datos en los argumentos esta activado, se inserta en mongo lo necesario
 
     if process == 1 or process == 0:
         #Peliculas

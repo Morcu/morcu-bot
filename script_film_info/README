@@ -1,0 +1,24 @@
+# DEPRECATED
+
+Preprocesado de datos para la insercion de mongo y evitar el acceso a varias colecciones
+
+
+Se descarta su uso debido a que hay archivos de varios GB cuyo procesamiento no es viable.
+En su lugar se importan a mongo los ficheros descomprimidos usando comandos de mongo.
+
+
+mongoimport -d film_data -c actors --type tsv --file id_actor_peli.tsv --headerline
+mongoimport -d film_data -c directors --type tsv --file id_director_writer.tsv --headerline
+mongoimport -d film_data -c episodes --type tsv --file id_episodios_temporadas.tsv --headerline
+mongoimport -d film_data -c film --type tsv --file title.tsv --headerline
+mongoimport -d film_data -c names --type tsv --file name.tsv --headerline
+mongoimport -d film_data -c tile_more_info --type tsv --file id_peli_info.tsv --headerline
+mongoimport -d film_data -c rating --type tsv --file id_peli_votos.tsv --headerline
+
+
+| Flag          | significado       |
+| ------------- | -------------     |
+| -d            | nombre db         |
+| -c            | nombre coleccion  |
+| --type        | tipo de archivo   |
+| --file        | nombre del archivo|
