@@ -1,4 +1,4 @@
-# DEPRECATED
+
 
 Preprocesado de datos para la insercion de mongo y evitar el acceso a varias colecciones
 
@@ -22,3 +22,6 @@ mongoimport -d film_data -c rating --type tsv --file id_peli_votos.tsv --headerl
 | -c            | nombre coleccion  |
 | --type        | tipo de archivo   |
 | --file        | nombre del archivo|
+
+
+Por otro lado en api_extract, se encuentra un script que extrae la informacion del mongo y la inserta en elasticsearch
