@@ -1,0 +1,4 @@
+
+la funcion ner_and_elastic permite hacer una consulta al etiquetador NER y buscar el resultado en elasticsearch
+
+

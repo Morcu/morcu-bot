@@ -1,0 +1,97 @@
+{
+  "luis_schema_version": "3.0.0",
+  "versionId": "0.1",
+  "name": "MorcuBot",
+  "desc": "",
+  "culture": "es-es",
+  "intents": [
+    {
+      "name": "None"
+    },
+    {
+      "name": "tfg.intent.find"
+    },
+    {
+      "name": "tfg.intent.saludo"
+    },
+    {
+      "name": "tfg.intent.uno"
+    }
+  ],
+  "entities": [
+    {
+      "name": "tipoContenido",
+      "roles": []
+    },
+    {
+      "name": "titulo",
+      "roles": []
+    }
+  ],
+  "composites": [],
+  "closedLists": [],
+  "patternAnyEntities": [],
+  "regex_entities": [],
+  "prebuiltEntities": [],
+  "model_features": [],
+  "regex_features": [],
+  "patterns": [],
+  "utterances": [
+    {
+      "text": "1",
+      "intent": "tfg.intent.uno",
+      "entities": []
+    },
+    {
+      "text": "hello",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "holi",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "saludos",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "tienes la pelicula arrival",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "tipoContenido",
+          "startPos": 10,
+          "endPos": 17
+        },
+        {
+          "entity": "titulo",
+          "startPos": 19,
+          "endPos": 25
+        }
+      ]
+    },
+    {
+      "text": "un",
+      "intent": "tfg.intent.uno",
+      "entities": []
+    },
+    {
+      "text": "unico",
+      "intent": "tfg.intent.uno",
+      "entities": []
+    },
+    {
+      "text": "uno",
+      "intent": "tfg.intent.uno",
+      "entities": []
+    }
+  ]
+}
