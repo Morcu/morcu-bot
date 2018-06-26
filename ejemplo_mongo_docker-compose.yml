@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+
+   mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - mongo
+    volumes:
+      - mongo:/data/db
+
+volumes:
+  mongo:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /home/morcu/bot/docker/test/mongo_data
+      
+networks: 
+  mongo:
