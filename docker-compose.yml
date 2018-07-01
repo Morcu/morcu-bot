@@ -7,7 +7,7 @@ services:
     ports: 
       - 9200:9200
     volumes:
-      - /home/morcu/es_data/:/usr/share/elasticsearch/data
+      - elasticV:/usr/share/elasticsearch/data
   kibana:
     image: kibana
     ports:
@@ -17,7 +17,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - /home/morcu/mongo_import_data/:/data/db
+      - mongoV:/data/db
   ner_client:
     build: ner_client/.
     ports: 
@@ -37,6 +37,17 @@ services:
       - "mongo:mongodb"
       - "ner_client:ner"
       - "cognitive:cognitive"
+  recommendador:
+    build: recommend/.
+    ports:
+      - 5005:5005
 
-
-      
+volumes:
+  mongoV:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /home/morcu/mongo_import_data/
+  elasticV:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /home/morcu/es_data/
