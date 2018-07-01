@@ -131,13 +131,13 @@ def main():
     indices = pd.Series(smd.index, index=smd['title'])
 
 
-def get_recommendations(title, indices, cosine_sim, titles):
+def get_recommendations(title, indices, cosine_sim, titles, smd):
     idx = indices[title]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:31]
     movie_indices = [i[0] for i in sim_scores]
-    return titles.iloc[movie_indices]
+    return smd.iloc[movie_indices].imdb_id
 
 
 # Function to get all the words
@@ -170,7 +170,7 @@ def improved_recommendations(title, indices, cosine_sim, smd):
     sim_scores = sim_scores[1:26]
     movie_indices = [i[0] for i in sim_scores]
 
-    movies = smd.iloc[movie_indices][['title', 'vote_count', 'vote_average', 'year']]
+    movies = smd.iloc[movie_indices][['title', 'vote_count', 'vote_average', 'year', 'imdb_id']]
     vote_counts = movies[movies['vote_count'].notnull()]['vote_count'].astype('int')
     vote_averages = movies[movies['vote_average'].notnull()]['vote_average'].astype('int')
     C = vote_averages.mean()
@@ -180,7 +180,15 @@ def improved_recommendations(title, indices, cosine_sim, smd):
     qualified['vote_average'] = qualified['vote_average'].astype('int')
     qualified['wr'] = qualified.apply(weighted_rating, args=(m, C), axis=1)
     qualified = qualified.sort_values('wr', ascending=False).head(10)
-    return qualified
+
+    json_qualified = json.loads(qualified.to_json())
+
+    order_f = [json_qualified["imdb_id"][x] for x in json_qualified["imdb_id"].keys()]
+    print('---------------')
+    print(order_f)
+    print('---------------')
+
+    return order_f
 
 
 
@@ -201,8 +209,8 @@ class ContentBased(Resource):
 
         title = request.args.get('title')
         #return json.loads(get_recommendations(str(title), indices, cosine_sim_cb, titles).head(10).to_json())
-        recomm = json.loads(get_recommendations(str(title), indices, cosine_sim_cb, titles).head(10).to_json())
-        return [[recomm[x], x] for x in recomm.keys()]
+        recomm = json.loads(get_recommendations(str(title), indices, cosine_sim_cb, titles, smd).head(10).to_json())
+        return [recomm[x] for x in recomm.keys()]
 
 
 class Metadata(Resource):
@@ -214,8 +222,8 @@ class Metadata(Resource):
         global cosine_sim_r
 
         title = request.args.get('title')
-        recomm = json.loads(get_recommendations(str(title), indices, cosine_sim_r, titles).head(10).to_json())
-        return [[recomm[x], x] for x in recomm.keys()]
+        recomm = json.loads(get_recommendations(str(title), indices, cosine_sim_r, titles, smd).head(10).to_json())
+        return [recomm[x]for x in recomm.keys()]
 
 class MetadataImproved(Resource):
 
@@ -227,8 +235,8 @@ class MetadataImproved(Resource):
         global smd
 
         title = request.args.get('title')
-        recomm = json.loads(improved_recommendations(str(title), indices, cosine_sim_r, smd).head(10).to_json())
-        return [[recomm[x], x] for x in recomm.keys()]
+        return improved_recommendations(str(title), indices, cosine_sim_r, smd)
+
 
 api.add_resource(HelloW, '/helloworld')
 api.add_resource(ContentBased, '/content_based')
