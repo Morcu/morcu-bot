@@ -50,3 +50,18 @@ Restore de backup mongo
 docker run --rm --volumes-from baaaa_mongo_1 -v $(pwd):/backup ubuntu bash -c "cd /data && mkdir mongo_backup && tar xvf /backup/m_backup.tar --strip 1"
 
 docker exec baaaa_mongo_1 sh -c "mongorestore /data/db/mongo_backup"
+
+
+Para obtener estadisticas de los procesadores de lenguaje natural:
+
+    - LUIS:
+        1 En la Aplicacion web abrir la pestaña de test
+        2 Batch testing panel
+        3 Import dataset --> el dataset es un array con las uterances a testear
+        4 run & see results --> aparece matriz de confusion con intents y entities
+    - RASA:
+        1 python -m rasa_nlu.evaluate --data train_data.json --model projects/default/model_20180617-123015/
+        Donde:
+            train_data.json --> modelo de luis/rasa
+            model... --> modelo entrenado
+        Muestra matrz de confusion 
