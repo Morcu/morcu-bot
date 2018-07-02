@@ -702,6 +702,10 @@ let ner_and_elastic = (item: string, res_resolve: any, enviar: boolean, fuzzy?: 
                     }
                     break;
             }
+        }else{
+            if(!_.isEmpty(res.entities.TPEL)){
+                search_data = res.entities.TPEL[0]
+            }
         }
         //Fuzzines puede ser un parametro a elegir
         let multi_match = {

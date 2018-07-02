@@ -37,4 +37,14 @@ pelicula	TCONT
 pulp	TPEL
 fiction	TPEL
 
+algo	O
+parecido	O
+a	O
+inception	TPEL
+
+una	O
+peli	TCONT
+parecida	O
+a	O
+inception	TPEL
 

@@ -11,12 +11,11 @@ let INTENT_ID = 'saludo';
 
 // This dialog is managed by this discrete steps
 export default [
-    find
+    recommend
 ];
 
-function find(session: BotBuilder.Session, args: any, next: Function) {
+function recommend(session: BotBuilder.Session, args: any, next: Function) {
     session.sendTyping();
-    //Variables para el mensaje
     let intent = {
         id: args.intent,
         name: args.intent,
@@ -51,52 +50,62 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
     };
     console.log('entities');
     console.dir(args.entities, {depth: null});
-    //Comprueba que tipo de contenido es (pelicula/serie)
     let filt = args.entities.filter((elem: any) => {
         return elem.type === 'tipoContenido';
     });
-    //Si ha dicho algun tipo de contenido
-    if (!_.isEmpty(filt)) {
+    //TODO: Hacer algo con el filtro
 
-        //Extraen las entidades
-        let values = args.entities.filter((elem: any) => {
-            return elem.type === 'titulo';
-        }).map((elem_ch: any) => {
-            return elem_ch.entity;
-        });
+    let values = args.entities.filter((elem: any) => {
+        return elem.type === 'titulo';
+    }).map((elem_ch: any) => {
+        return elem_ch.entity;
+    });
+    console.log(values);
+    //const req_url = 'http://localhost:6789/cognitiveService/ne/';
+    const req_url = 'http://cognitive:6789/cognitiveService/ne/';
+    const key = '4e894a5bee711efd3c75378759b6d3af';
+    const language = 'es';
+    const external_source = 'imdb_id';
+    const find_url = 'https://api.themoviedb.org/3/find/';
+    const recomm_morcu = 'https://4614fd13.ngrok.io/content_based?';
+    var options = {
+        uri: req_url + session.message.text,
+        headers: {
+            'User-Agent': 'Request-Promise'
+        },
+        json: true // Automatically parses the JSON string in the response
+    };
 
-        //TODO: Sofisticar la busqueda para que devuelva mas de 1?
+    rp(options)
+        .then((data: any) => {
+            console.log('datos');
+            console.log(data);
+            let filt = data.hits.hits.filter((filt: any) => {
+                return filt.cert > 0.75 || true;
+            });
+            let film = _.sortBy(filt, ['_source.startYear']).reverse();
+            console.log(film);
+            console.log('-----------------------------------film-----------------------------------');
+            //Peticion al recomendador (caso ideal, es una pelicula y se puede pedir al recomendador propio)
 
-        //Peticion para obtener la pelicula de Elastic + NER
-        console.log(values);
-        //const req_url = 'http://localhost:6789/cognitiveService/ne/';
-        const req_url = 'http://cognitive:6789/cognitiveService/ne/';
-        const key = '4e894a5bee711efd3c75378759b6d3af';
-        const language = 'es';
-        const external_source = 'imdb_id';
-        const find_url = 'https://api.themoviedb.org/3/find/';
-        var options = {
-            uri: req_url + session.message.text,
-            headers: {
-                'User-Agent': 'Request-Promise'
-            },
-            json: true // Automatically parses the JSON string in the response
-        };
 
-        rp(options)
-            .then((data: any) => {
-                console.log('datos');
-                console.log(data);
-                let filt = data.hits.hits.filter((filt: any) => {
-                    return filt.cert > 0.75 || true;
-                });
-                let film = _.sortBy(filt, ['_source.startYear']).reverse();
-                console.log(film);
-                console.log('-----------------------------------film-----------------------------------');
 
-                //Peticion a tmdb para obtener la imagen y datos diversos
+            var options = {
+                uri: recomm_morcu + 'title=' + film[0]._source.originalTitle,
+                headers: {
+                    'User-Agent': 'Request-Promise'
+                },
+                json: true
+            };
+            return rp(options).then((recom_resp: any) => {
+
+                console.log('__recooommm__');
+                console.log(recom_resp);
+                //------------
+
+                //TODO:Por ahora solo devuelve1 pelicula hay que devolver mas de 1
                 var options = {
-                    uri: find_url + film[0]._source.tconst,
+                    uri: find_url + film[0],
                     qs: {
                         api_key: key,
                         language: language,
@@ -107,10 +116,9 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
                     },
                     json: true
                 };
-                console.log(find_url + data.hits.hits[0]._source.tconst);
+                //console.log(find_url + data.hits.hits[0]._source.tconst);
                 return rp(options).then((rest_data: any) => {
                     console.log(rest_data);
-                    //Si hay resultados se monta elmensaje
                     if ( !_.isEmpty(rest_data['movie_results'], true)) {
                         //console.log(rest_data['movie_results'])
                         console.log(rest_data.movie_results[0].original_title);
@@ -135,8 +143,7 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
             .catch((err: Error) => {
                 console.log('Error' + err);
             });
-
-    }
+        });
 }
 
 
