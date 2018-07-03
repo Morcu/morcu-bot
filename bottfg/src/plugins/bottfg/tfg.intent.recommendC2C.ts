@@ -67,7 +67,7 @@ function recommend(session: BotBuilder.Session, args: any, next: Function) {
     const language = 'es';
     const external_source = 'imdb_id';
     const find_url = 'https://api.themoviedb.org/3/find/';
-    const recomm_morcu = 'https://4614fd13.ngrok.io/content_based?';
+    const recomm_morcu = 'http://recommendador:5005/content_based?';
     var options = {
         uri: req_url + session.message.text,
         headers: {
@@ -83,12 +83,13 @@ function recommend(session: BotBuilder.Session, args: any, next: Function) {
             let filt = data.hits.hits.filter((filt: any) => {
                 return filt.cert > 0.75 || true;
             });
-            let film = _.sortBy(filt, ['_source.startYear']).reverse();
+
+            //Ordenar por año en inverso
+            //let film = _.sortBy(filt, ['_source.startYear']).reverse();
+            let film = filt;
             console.log(film);
             console.log('-----------------------------------film-----------------------------------');
             //Peticion al recomendador (caso ideal, es una pelicula y se puede pedir al recomendador propio)
-
-
 
             var options = {
                 uri: recomm_morcu + 'title=' + film[0]._source.originalTitle,
@@ -102,10 +103,9 @@ function recommend(session: BotBuilder.Session, args: any, next: Function) {
                 console.log('__recooommm__');
                 console.log(recom_resp);
                 //------------
-
                 //TODO:Por ahora solo devuelve1 pelicula hay que devolver mas de 1
                 var options = {
-                    uri: find_url + film[0],
+                    uri: find_url + recom_resp[0],
                     qs: {
                         api_key: key,
                         language: language,

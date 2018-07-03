@@ -37,6 +37,7 @@ services:
       - "mongo:mongodb"
       - "ner_client:ner"
       - "cognitive:cognitive"
+      - "recommendador:recommendador"
   recommendador:
     build: recommend/.
     ports:
