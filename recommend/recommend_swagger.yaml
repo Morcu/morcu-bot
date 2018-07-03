@@ -1,0 +1,157 @@
+swagger: "2.0"
+info:
+  description: "Server for the built in recommendation"
+  version: "1.0.0"
+  title: "Film Recommender"
+  #termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "david.morcuende.c@gmail.com"
+ #license:
+  #  name: "Apache 2.0"
+   # url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:5005"
+#basePath: "/v2"
+tags:
+- name: "content_based"
+  description: "Content based recomendations"
+  externalDocs:
+    description: "Find out more"
+    url: "https://github.com/Morcu/morcu-bot/blob/master/recommend/"
+- name: "metadata"
+  description: "recommendations based on the metadata"
+  externalDocs:
+    description: "Find out more"
+    url: "https://github.com/Morcu/morcu-bot/blob/master/recommend/"
+- name: "metadata improoved"
+  description: "recommendations based on the metadata and processed using the normalized users scores"
+  externalDocs:
+    description: "Find out more"
+    url: "https://github.com/Morcu/morcu-bot/blob/master/recommend/"
+schemes:
+#- "https"
+- "http"
+paths:
+  /status:
+    get:
+      tags:
+      - "status"
+      summary: "Return the status of the service"
+      #description: "Multiple status values can be provided with comma separated strings"
+      operationId: "status"
+      produces:
+      #- "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        404:
+          description: "Not found"
+  /content_based:
+    get:
+      tags:
+      - "content_based"
+      summary: "Finds similar films by title"
+      #description: "Multiple status values can be provided with comma separated strings"
+      operationId: "find_content_based"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "title"
+        in: "query"
+        description: "Original title of the film"
+        required: true
+        type: "string"
+        items:
+          type: "string"
+          enum:
+          - "The godfather"
+          - "inception"
+          - "sold"
+          default: "available"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/imdbid_arr"
+        400:
+          description: "Invalid status value"
+  /metadata:
+    get:
+      tags:
+      - "metadata"
+      summary: "Finds similar films by title"
+      #description: "Multiple status values can be provided with comma separated strings"
+      operationId: "find_metadata"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "title"
+        in: "query"
+        description: "Original title of the film"
+        required: true
+        type: "string"
+        items:
+          type: "string"
+          enum:
+          - "The godfather"
+          - "inception"
+          - "sold"
+          default: "available"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/imdbid_arr"
+        400:
+          description: "Invalid status value"
+  /metadata_i:
+    get:
+      tags:
+      - "metadata improoved"
+      summary: "Finds similar films by title"
+      #description: "Multiple status values can be provided with comma separated strings"
+      operationId: "find_metadata_i"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "title"
+        in: "query"
+        description: "Original title of the film"
+        required: true
+        type: "string"
+        items:
+          type: "string"
+          enum:
+          - "The godfather"
+          - "inception"
+          - "sold"
+          default: "available"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/imdbid_arr"
+        400:
+          description: "Invalid status value"
+
+  
+definitions:
+ 
+  imdbid_arr:
+      type: string
+      enum:
+      - "tt0816692"
+externalDocs:
+  description: "More about this project"
+  url: "https://github.com/Morcu/morcu-bot"
