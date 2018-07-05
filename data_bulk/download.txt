@@ -1,0 +1,3 @@
+wget https://datasets.imdbws.com/name.basics.tsv.gz
+
+wget https://datasets.imdbws.com/title.basics.tsv.gz
