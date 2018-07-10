@@ -18,9 +18,9 @@ properties = {
                     "genres": {"type": "text"},
                 }
             }
-tsv_filenames = ["titles/data.tsv", "titles/data.tsv", "titles/data.tsv", "names/data.tsv"]
-indexes = ["films", "series", "others", "people"]
-types = ["film", "serie", "other", "person"]
+tsv_filenames = ["titles/data.tsv", "titles/data.tsv", "titles/data.tsv"]
+indexes = ["films", "series", "others"]
+types = ["film", "serie", "other"]
 mapping = {
     "mappings": {
 

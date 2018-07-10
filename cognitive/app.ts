@@ -701,6 +701,30 @@ let ner_and_elastic = (item: string, res_resolve: any, enviar: boolean, fuzzy?: 
                         search_data = res.entities.TPEL[0]
                     }
                     break;
+                case 'serie':
+                    key = 'primaryTitle';
+                    index = 'series';
+                    if(!_.isEmpty(res.entities.TPEL)){
+                        search_data = res.entities.TPEL[0]
+                    }
+                    break;
+                case 'corto':
+                    key = 'primaryTitle';
+                    index = 'other';
+                    if(!_.isEmpty(res.entities.TPEL)){
+                        search_data = res.entities.TPEL[0]
+                    }
+                    break;  
+                case 'actor':
+                case 'director':
+                    key = 'primaryName';
+                    index = 'people';
+                    if(!_.isEmpty(res.entities.TPEL)){
+                        search_data = res.entities.TPEL[0]
+                    }
+                    break;
+                    
+
             }
         }else{
             if(!_.isEmpty(res.entities.TPEL)){

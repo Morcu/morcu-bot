@@ -69,8 +69,8 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
 
         //Peticion para obtener la pelicula de Elastic + NER
         console.log(values);
-        //const req_url = 'http://localhost:6789/cognitiveService/ne/';
-        const req_url = 'http://cognitive:6789/cognitiveService/ne/';
+        const req_url = 'http://localhost:6789/cognitiveService/ne/';
+        //const req_url = 'http://cognitive:6789/cognitiveService/ne/';
         const key = '4e894a5bee711efd3c75378759b6d3af';
         const language = 'es';
         const external_source = 'imdb_id';
@@ -87,10 +87,10 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
             .then((data: any) => {
                 console.log('datos');
                 console.log(data);
-                let filt = data.hits.hits.filter((filt: any) => {
+                let film = data.hits.hits.filter((filt: any) => {
                     return filt.cert > 0.75 || true;
                 });
-                let film = _.sortBy(filt, ['_source.startYear']).reverse();
+                //let film = _.sortBy(filt, ['_source.startYear']).reverse();
                 console.log(film);
                 console.log('-----------------------------------film-----------------------------------');
 
@@ -108,6 +108,7 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
                     json: true
                 };
                 console.log(find_url + data.hits.hits[0]._source.tconst);
+                console.log(film[0]._source.tconst);
                 return rp(options).then((rest_data: any) => {
                     console.log(rest_data);
                     //Si hay resultados se monta elmensaje
