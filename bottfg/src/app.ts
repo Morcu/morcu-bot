@@ -8,6 +8,8 @@ import * as logger from 'logops';
 logger.info('Load configuration from file %s', configFile);
 logger.setFormat(logger.formatters.dev);
 
+import { RASARecognizer } from './recognizers/RASARecognizer';
+
 import {
     Bot,
     BotBuilder,
@@ -19,17 +21,27 @@ import {
 import {
     DashBot
 } from './middlewares';
+import { RASARecognizerNER } from './recognizers/RASARecognizerNER';
 
 let luisModel: any = {
     'es-es': process.env.LUIS_MODEL__CORTANA_EUR_ES_ES,
     'es': process.env.LUIS_MODEL__CORTANA_EUR_ES_ES
 };
 
+let rasaModel: any = {
+    'es-es': process.env.RASA_MODEL_ES_ES,
+    'es': process.env.RASA_MODEL_ES_ES
+};
+
+
 // Create the bot
 let bot = new Bot({
     // The recognizers models to be used
     intentRecognizers: [
-        new BotBuilder.LuisRecognizer(luisModel)
+        new BotBuilder.LuisRecognizer(luisModel),
+        new RASARecognizer(rasaModel),
+        new RASARecognizerNER(rasaModel)
+        //new RASARecognizer('')
     ],
 
     // The recognizer order (series, parallel) <in bot-core default is series>

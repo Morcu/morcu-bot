@@ -38,10 +38,15 @@ services:
       - "ner_client:ner"
       - "cognitive:cognitive"
       - "recommendador:recommendador"
+      - "rasa:rasa"
   recommendador:
     build: recommend/.
     ports:
       - 5005:5005
+  rasa:
+    build: rasa/.
+    ports:
+      - 5000:5000
 
 volumes:
   mongoV:

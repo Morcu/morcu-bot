@@ -11,8 +11,8 @@ RUN mkdir -p /var/log/bottfg
 ADD . /opt/bottfg
 WORKDIR /opt/bottfg
 
-RUN apk update
-RUN apk upgrade
+#RUN apk update
+#RUN apk upgrade
 
 RUN npm install && \
     npm run build && \
