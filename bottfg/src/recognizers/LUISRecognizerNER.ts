@@ -3,29 +3,8 @@ import * as logger from 'logops';
 import requestPromise from 'request-promise';
 import { getNerResponse, INerOptions, INerResult } from './nerUtils';
 
-export interface IRasaIntent {
-    name: string;
-    confidence: number;
-}
-export interface IRasaEntity {
-    start: number;
-    end: number;
-    value: string;
-    entity: string;
-    extractor: string;
-    confidence: number;
-    processors: any;
-}
-export interface IRasaResult {
-    text: string;
-    intent: IRasaIntent;
-    entities: Array<IRasaEntity>;
-    intent_ranking: Array<IRasaIntent>;
-    project: string;
-    model: string;
-}
 
-export class RASARecognizerNER implements BotBuilder.IIntentRecognizer {
+export class LUISRecognizerNER implements BotBuilder.IIntentRecognizer {
     private models: any;
 
     /**
@@ -52,19 +31,19 @@ export class RASARecognizerNER implements BotBuilder.IIntentRecognizer {
     public recognize(context: BotBuilder.IRecognizeContext,
         cb: (err: Error, result: BotBuilder.IIntentRecognizerResult) => void): void {
 
-        logger.debug('[RASRecognizerNER].recognize__context__', JSON.stringify([context.locale, context.message]));
+        logger.debug('[LUISRecognizerNER].recognize__context__', JSON.stringify([context.locale, context.message]));
 
         let result: BotBuilder.IIntentRecognizerResult = {
             score: 0.0,
             intent: null
         };
         if (context && context.message && context.message.text) {
-            logger.debug('[RASRecognizerNER].recognize__models__', context);
+            logger.debug('[LUISRecognizerNER].recognize__models__', context);
 
-            let getResults = (err: Error, data: IRasaResult): void => {
+            let getResults = (err: Error, data: BotBuilder.ILuisModelMap): void => {
                 if (!err) {
-                    //result = RASARecognizer.convertRasaToLuisModel(data);
-
+                    //result = LUISRecognizerNER.convertRasaToLuisModel(data);
+                    /*
                     //result.query = rasaM.text;
                     result.intent = data.intent.name;
                     result.score = data.intent.confidence;
@@ -83,14 +62,15 @@ export class RASARecognizerNER implements BotBuilder.IIntentRecognizer {
                             type: elem.entity,
                             score: elem.confidence
                         };
-                    });
+                    });*/
                     cb(null, result);
                 } else {
                     cb(err, null);
                 }
             };
-            let rasaURl = 'http://rasa:5000';
-            RASARecognizerNER.recognizeRemotelly(context, rasaURl, getResults);
+            let luisURl = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/979f2e3b-51db-4d70-bded-d97c06c88902' +
+            '?subscription-key=140b5d63529e413f964ba603287bd941&verbose=true&timezoneOffset=0&q=';
+            LUISRecognizerNER.recognizeRemotelly(context, luisURl, getResults);
         } else {
             cb(null, result);
         }
@@ -106,7 +86,7 @@ export class RASARecognizerNER implements BotBuilder.IIntentRecognizer {
      static recognizeRemotelly(context: BotBuilder.IRecognizeContext,
         modelUrl: string, callback: (err: Error, data: any) => void) {
 
-        logger.debug('[RASRecognizerNER].recognizeRemotelly__message__', context.message);
+        logger.debug('[LUISRecognizerNER].recognizeRemotelly__message__', context.message);
 
         let nerOptions: INerOptions = {
             port: 9191,
@@ -123,20 +103,17 @@ export class RASARecognizerNER implements BotBuilder.IIntentRecognizer {
                 'parse'
             ].join('/');
 
-            logger.debug('[RASRecognizerNER].recognizeRemotelly__url__', url);
+            logger.debug('[LUISRecognizerNER].recognizeRemotelly__url__', url);
 
             let options = {
                 method: 'GET',
-                url: url,
-                qs: {
-                    q: encodeURIComponent((res.raw as any) || '')
-                },
+                url: url + encodeURIComponent((res.raw as any) || ''),
                 json: true
             };
 
             requestPromise(options)
                 .then((data: any) => {
-                    logger.debug('[RASRecognizerNER].data', data);
+                    logger.debug('[LUISRecognizerNER].data', data);
                     callback(null, data);
                 })
                 .catch((err: any) => {
