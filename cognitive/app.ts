@@ -13,6 +13,14 @@ let jsonfile = require('jsonfile');
 let SPECIALS_DESCRIPTOR = 'specials-descriptor.json';
 
 const GENRE_CERT_VALUE = 0.5;
+const FIND_INTENT = 'tfg.intent.find';
+const RECOM_INTENT = '';
+const FILM_ENTITY = '';
+const SERIE_ENTITY = '';
+const DIRECTOR_ENTITY = '';
+const ACTOR_ENTITY = '';
+const CORTO_ENTITY = '';
+
 
 //Conexion con elasticsearch
 
@@ -91,43 +99,21 @@ let queryLiterales = (msg: BotBuilder.IMessage, res: any, enviar: boolean) => {
     }
 };
 
-console.log('__TT__specials__', specials);
-
-
-//dado el get con el path si se le añade algun argumento este se recoge
-app.get('/cognitiveService/gen/:gen', function (req: any, res: any) {
-    query('bcgnew', 'synonyms.val', req.params.gen, res, true);
-});
 
 app.get('/cognitiveService/ne/:gen', function (req: any, res: any) {
     ner_and_elastic(req.params.gen, res, true);
 });
 
 
-
-app.get('/cognitiveService/tit/:tit', function (req: any, res: any) {
-    nameQuery('films', 'primaryTitle', req.params.tit, res, true, 0, 0);
+app.post('/cognitiveService/getDataFromEntity', function (req: any, res: any) {
+    var msg = req.body;
+    console.log('__getDataFromEntity__POST__', msg);
+    
 });
-app.get('/cognitiveService/dir/:dir', function (req: any, res: any) {
-    nameQuery('bcdnew', 'nombre', req.params.dir, res, true, 1.5, 1);
-});
-app.get('/cognitiveService/rep/:rep', function (req: any, res: any) {
-    nameQuery('bcrnew', 'nombre', req.params.rep, res, true, 1.5, 1);
-});
-app.get('/cognitiveService/prod/:prod', function (req: any, res: any) {
-    nameQuery('bcpnew', 'nombre', req.params.prod, res, true, 0, 0);
-});
-app.get('/cognitiveService/nombre/:nombre', function (req: any, res: any) {
-    nameQuery('bcnombre', 'nombre', req.params.nombre, res, true, 1.5, 1);
-});
-app.get('/cognitiveService/all/:all', function (req: any, res: any) {
-    allQueries(req.params.all, res);
-});
-
 
 //Hace que todos los gets dado el path sea redireccionado al puerto indicado en port
 
-var port = 6789;
+var port = 6787;
 app.listen(port, function () {
     console.log('CognitiveService listening on port ' + port + '!')
 });
@@ -356,324 +342,62 @@ const bulkDelete = function bulkDelete(index: string, type: string, id: string) 
         .catch(console.log);
 };
 
-/**
-* Dado un indice, una clave y un item, devuelve una respuesta
+let get_data_from_elastic = (args: any, res_resolve: any, fuzzy?: number, useFuzzyValue?: number) => {
+
+/*
+    1º ver que intent es
+    2º saber si hay entidades de tipo de contenido
+    3º Comprobar si hay alguna entidad para realizar la busqueda
+        - Si no hay entidad a buscar FIN
+        - Si hay entidad por la que buscar
+            - Si hay entidad de tipo de contenido se busca en ese indice
+            - Si no hay entidad de tipo de contenido habra que realizar una busqueda en diferentes indices
 */
-let query = (index: string, key: string, item: string, res: any, enviar: boolean) => {
-    if (qy) {
-        console.log('___________________________________________________');
-        console.log('__TT__query__', index, key, item);
-    }
-
-    // un body de query para el elasticsearch
-    let match: any = {};
-
-    let multi_match = {
-        fields: [key],
-        query: item,
-        fuzziness: 2
-    }
-
-
-    match[key] = item;
-    let fields: any = {};
-    fields[key] = {};
-    let body = {
-        size: 5,
-        from: 0,
-        query: { match },
-        highlight: { fields: fields }
-    };
-
-
-    return search(index, body)
-
-        //Se llama con el indice y el body a una query para elastic
-        .then((results: any) => {
-            //se obtienen los hits completos
-            let hitsCompletos = dejaCompletos(results, key);
-            //Si hay hits completos se guardan sus valores
-            if (hitsCompletos.length > 0) {
-                results.hits.total = hitsCompletos.length;
-                results.hits.hits = hitsCompletos;
-                results.hits.max_score = hitsCompletos.reduce((van: any, vac: any) => {
-                    return (vac._score > van ? vac._score : van);
-                }, 0);
-            }
-            //Se incorporan a la query de respuesta los datos necesarios dado los resultados, el item y la clave
-            let resultF = incorporaQueryResults(results, item, key);
-
-            if (qy) {
-                console.log('__TT__results______________________________________');
-                console.log('', resultF.hits.total, ' (' + resultF.query.cert + ') ');
-                console.log('___________________________________________________')
-                console.dir(resultF, { depth: null });
-            }
-            if (enviar) {
-                res.send(resultF);
-            } else {
-                return resultF;
-            }
-        })
-        .catch(console.error);
-};
-//fuzzy es un valor numerico
-//useFuzzyValue es un numero para indicar que valor de fuzzy hay que usar:
-//      0 -> usa el valor de fuzzy por defecto (0.5)
-//      1 -> usa el valor del argumento fuzzy
-//      2 -> fuzzy en funcion de el numero de palabras
-//              - 1,2 -> 0.5
-//              - mayor que 2 -> 1.5    
-let nameQuery = (index: string, key: string, item: string, res: any, enviar: boolean, fuzzy?: number, useFuzzyValue?: number) => {
-    if (qy) {
-        console.log('___________________________________________________');
-        console.log('__JJ__query__', index, key, item);
-    }
-
-    // un body de query para el elasticsearch
-    //let match = {};
-
-
-    //Fuzzines puede ser un parametro a elegir
-    let multi_match = {
-        fields: [key],
-        query: item,
-        fuzziness: 0.5,
-
-    }
-    switch (useFuzzyValue) {
-        case 1:
-            multi_match.fuzziness = fuzzy;
+  
+    switch (args.intent) {
+        case FIND_INTENT:
+            
             break;
-        case 2:
-            if (item.trim().split(" ").length > 2) {
-                multi_match.fuzziness = 1.5;
-            }
+        case RECOM_INTENT:
+
             break;
+    }  
+}
+
+let find_intent = (res_resolve: any, entities: any) => {
+    let a =[ { "entity": "pelicula",
+       "type": "tipoContenido",
+       "startIndex": 10,
+       "endIndex": 17,
+       "score": 0.8968616 },
+     { "entity": "arrival",
+       "type": "titulo",
+       "startIndex": 19,
+       "endIndex": 25,
+       "score": 0.895681441 } ] 
+    let ent_list = entities.map( (entity: any) => {
+        return entity.type;
+    });
+    console.log(ent_list)
+    
+    if( ent_list.indexOf(FILM_ENTITY) > 0){
+
+    }else if( ent_list.indexOf(SERIE_ENTITY) > 0){
+
+    }else if( ent_list.indexOf(FILM_ENTITY) > 0){
+
+    }else if( ent_list.indexOf(ACTOR_ENTITY) > 0 || ent_list.indexOf(DIRECTOR_ENTITY) > 0){
+
+    }else if( ent_list.indexOf(CORTO_ENTITY) > 0){
+
+    }else{
+
     }
-    let match: any = {};
+}
 
-    //El type phrase es demasiado restrictivo, solo hace matching
-    // match[key] = {
-    //     query: item,
+let recom_intent = (res_resolve: any, entities: any) => {
 
-    //     type:  "phrase",
-    //     fuzziness: 1.5
-    // };
-
-    match[key] = item;
-    let fields: any = {};
-    fields[key] = {};
-    let body = {
-        size: 5,
-        from: 0,
-        query: { multi_match },
-        highlight: { fields: fields }
-    };
-    console.log('__BODY__', body);
-
-    return search(index, body)
-        .then((results: any) => {
-            console.log('__PRIMER_RESULT__');
-            console.dir(results, { depth: null });
-
-            let hitsCompletos = dejaCompletos(results, key);
-
-            // if (hitsCompletos.length > 0) {
-            //     results.hits.total = hitsCompletos.length;
-            //     results.hits.hits = hitsCompletos;
-            //     results.hits.max_score = hitsCompletos.reduce((van, vac) => {
-            //         return (vac._score > van ? vac._score : van);
-            //     }, 0);
-            // }
-
-            results = incorporaQueryResults(results, item, key);
-            console.log('__complete__', hitsCompletos);
-            if (!_.isEmpty(results.scoreVSsource)) {
-                //Indexar en elastic
-                //la frase esta en  results.query.used
-                let time = Date.now();
-                let rand = Math.random()
-                let id = [time, rand].join('_');
-                let data = [{ 'texto': results.query.item, id: id }];
-                let type = 'sentence';
-                let indexSentence = 'sentences';
-                console.log('__datos__', data);
-                return bulkIndex(indexSentence, type, data).then((datoIndexado: any) => {
-                    //Es en la primera posiciondel array porque solo hemos indexado 1
-                    console.dir(datoIndexado, { depth: null })
-
-                    let datoIndexadoIndex = datoIndexado.items[0].index;
-                    return exists(datoIndexadoIndex._index, datoIndexadoIndex._type, datoIndexadoIndex._id).then((exists: any) => {
-                        console.log('_existe_', exists);
-                        if (exists) {
-
-                            //Se hace una busqueda por cada contenido encontrado
-                            let mapDeResultados = results.scoreVSsource.map((resultadoScoreVS: any) => {
-                                console.log('__ResiltsVS__');
-                                console.log(resultadoScoreVS);
-                                let pelicula = resultadoScoreVS[0].highlight.replace(/<em>/g, '').replace(/<\/em>/g, '');
-                                let multi_match = {
-                                    fields: ["texto"],
-                                    query: pelicula,
-                                    fuzziness: 1.5,
-                                }
-                                let bool = {
-                                    must: [
-                                        {
-                                            match: {
-                                                texto: {
-                                                    query: pelicula,
-                                                    fuzziness: 1.5
-                                                }
-                                            }
-                                        },
-                                        {
-                                            match: {
-                                                _id: datoIndexado.items[0].index._id
-                                            }
-                                        }
-                                    ]
-                                };
-
-                                fields["texto"] = {};
-                                let body = {
-                                    size: 5,
-                                    from: 0,
-                                    query: { bool },
-                                    highlight: { fields: fields }
-                                };
-                                console.log('__query_body__');
-                                console.dir(body, { depth: null });
-                                //hacer la busqueda
-
-                                //Esto se podria hacer con un return directo
-                                let resultadoBusqSentence = search(indexSentence, body)
-                                    .then((resultados: any) => {
-                                        console.log('__TEST__');
-                                        console.dir(resultados, { depth: null });
-                                        console.log('___PELICULA__1__', index, pelicula);
-                                        let resultadoFin = resultados.hits.hits.map((peli: any) => {
-                                            let matched: any[] = [];
-                                            let fraseSplit: string[];
-                                            if (peli.hasOwnProperty('highlight')) {
-                                                fraseSplit = peli.highlight.texto[0].split(' ').map((palabra: string, i: number) => {
-                                                    if (palabra.indexOf('<em>') > -1) {
-                                                        matched.push(i);
-                                                        palabra = palabra.replace('<em>', '').replace('</em>', '');
-                                                    }
-                                                    return palabra;
-                                                });
-                                            }
-                                            let wordCountPhrase = 0;
-                                            let wordCountFilm = 0;
-                                            let peliculaSplit = pelicula.trim().split(' ');
-                                            peliculaSplit.forEach((item: any) => {
-                                                wordCountFilm = wordCountFilm + item.trim().length;
-                                            });
-                                            fraseSplit.forEach(item => {
-                                                wordCountPhrase = wordCountPhrase + item.trim().length
-                                            });
-                                            let wordCountMatch = 0;
-                                            matched.forEach(item => {
-                                                let palabra = fraseSplit[item]
-                                                wordCountMatch = wordCountMatch + palabra.trim().length
-                                            });
-                                            let wc = wordCountMatch / wordCountPhrase;
-                                            let wcFilm = wordCountMatch / wordCountFilm;
-
-                                            let matchVSSentence = { puntuacion: matched.length / fraseSplit.length, wordCount: wc }
-                                            let matchedVSMatched = { puntuacion: matched.length / peliculaSplit.length, wordCount: wcFilm }
-                                            console.log('__indice__', index);
-                                            let selection;
-                                            switch (index) {
-                                                case 'bctnew':
-                                                    selection = 'titulo'
-                                                    break;
-                                                case 'bcrnew':
-                                                    selection = 'reparto'
-                                                    break;
-                                                case 'bcdnew':
-                                                    selection = 'director'
-                                                    break;
-                                                case 'bcpnew':
-                                                    selection = 'productora'
-                                                    break;
-                                                case 'bcnombre':
-                                                    selection = 'reparto'
-                                                    break;
-                                            }
-                                            console.log('__indice__', selection);
-
-                                            let composicion = {
-                                                frase: fraseSplit, matched: matched, matchVSSentence: matchVSSentence, matchVSMatched: matchedVSMatched,
-                                                type: selection, resultado: pelicula, year: results.hits.hits[0]._source.year,
-                                                rating: results.hits.hits[0]._source.rating,
-                                                photo: results.hits.hits[0]._source.photo, v: results.hits.hits[0]._source.v,
-                                            }
-                                            return composicion;
-                                        });
-
-                                        console.log('___PELICULA__2__', index, pelicula);
-                                        console.log('fin', resultadoFin);
-                                        return resultadoFin;
-                                    });
-
-                                return resultadoBusqSentence;
-
-                            });
-
-                            return Promise.all(mapDeResultados).then(valuesFromMap => {
-
-                                results.resultsMatched = _.flattenDeep(valuesFromMap[0]);
-                                results.generalResults = _.flattenDeep(valuesFromMap);
-                                if (qy) {
-                                    console.log('__JJ__results______________________________________');
-                                    console.log('', results.hits.total, ' (' + results.query.cert + ') ');
-
-                                    console.log('___________________________________________________');
-
-                                    console.dir(results, { depth: null });
-                                }
-
-                                //borrar al final
-                                let typeBorrar = 'sentence';
-                                let indexBorrar = 'sentences';
-                                let idBorrar = datoIndexado.items[0].index._id;
-                                let borrar = bulkDelete(indexBorrar, typeBorrar, idBorrar);
-                                results.responseCode = true;
-                                if (enviar) {
-                                    res.send(results);
-                                } else {
-                                    console.log('Retorno de valores');
-                                    return results;
-                                }
-
-                            });
-
-                            //let pelicula = results.scoreVSsource[0][0].highlight.replace(/<em>/g, '').replace(/<\/em>/g, '')
-                        }
-                    });
-
-                });
-            } else {
-                results = { responseCode: false };
-                
-                if (enviar) {
-                    res.send(results);
-                } else {
-                    console.log('Retorno de valores');    
-                    var promise = new Promise((resolve, reject) => {
-                        resolve(results)    
-                    });
-                    return promise;
-                }
-                               
-
-            }
-        })
-        .catch(console.error);
-};
+}
 
 let ner_and_elastic = (item: string, res_resolve: any, enviar: boolean, fuzzy?: number, useFuzzyValue?: number) => {
 
@@ -763,23 +487,6 @@ let ner_and_elastic = (item: string, res_resolve: any, enviar: boolean, fuzzy?: 
     });
 
 
-}
-
-let allQueries = (item: string, res: any) => {
-    let promesas: any = []
-    promesas.push(query('bcgnew', 'synonyms.val', item, res, false));
-
-    promesas.push(nameQuery('bctnew', 'titulo', item, res, false));
-    promesas.push(nameQuery('bcdnew', 'nombre', item, res, false, 1.5, 1));
-    promesas.push(nameQuery('bcrnew', 'nombre', item, res, false, 1.5, 1));
-    promesas.push(nameQuery('bcpnew', 'nombre', item, res, false));
-    promesas.push(nameQuery('bcnombre', 'nombre', item, res, false, 1.5, 1));
-
-    Promise.all(promesas).then(values => {
-
-        console.log('__ENVIANDO__');
-        res.send(values);
-    });
 }
 
 //Funcion de limpieza de caracteres
