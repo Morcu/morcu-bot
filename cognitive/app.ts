@@ -14,14 +14,21 @@ let SPECIALS_DESCRIPTOR = 'specials-descriptor.json';
 
 const GENRE_CERT_VALUE = 0.5;
 const FIND_INTENT = 'tfg.intent.find';
-const RECOM_INTENT = '';
-const FILM_ENTITY = '';
-const SERIE_ENTITY = '';
-const DIRECTOR_ENTITY = '';
-const ACTOR_ENTITY = '';
-const CORTO_ENTITY = '';
-
-
+const RECOM_INTENT = 'tfg.intent.recommendC2C';
+const FILM_ENTITY = 'pelicula';
+const SERIE_ENTITY = 'serie';
+const DIRECTOR_ENTITY = 'director';
+const ACTOR_ENTITY = 'actor';
+const CORTO_ENTITY = 'corto';
+const FILM_INDEX = 'films';
+const SERIES_INDEX = 'series';
+const OTHERS_INDEX = 'others';
+const PEOPLE_INDEX = 'people';
+const GENRES_INDEX = 'genres';
+const CONTENT_TYPE = 'content_types';
+const CONTENT_TYPE_INDEX = 'content_types';
+const PERSON_TAG = 'jobs';
+const PERSON_TAG_INDEX = 'jobs';
 //Conexion con elasticsearch
 
 const esClient = new elasticsearch.Client({
@@ -108,6 +115,8 @@ app.get('/cognitiveService/ne/:gen', function (req: any, res: any) {
 app.post('/cognitiveService/getDataFromEntity', function (req: any, res: any) {
     var msg = req.body;
     console.log('__getDataFromEntity__POST__', msg);
+
+    get_data_from_elastic(msg, res)
     
 });
 
@@ -356,47 +365,138 @@ let get_data_from_elastic = (args: any, res_resolve: any, fuzzy?: number, useFuz
   
     switch (args.intent) {
         case FIND_INTENT:
-            
+            find_intent(res_resolve, args.entities)
             break;
         case RECOM_INTENT:
-
+            recom_intent(res_resolve, args.entities)
             break;
     }  
 }
 
 let find_intent = (res_resolve: any, entities: any) => {
-    let a =[ { "entity": "pelicula",
-       "type": "tipoContenido",
-       "startIndex": 10,
-       "endIndex": 17,
-       "score": 0.8968616 },
-     { "entity": "arrival",
-       "type": "titulo",
-       "startIndex": 19,
-       "endIndex": 25,
-       "score": 0.895681441 } ] 
+    
     let ent_list = entities.map( (entity: any) => {
         return entity.type;
     });
     console.log(ent_list)
+    //TODO: Comprobar que junto a la entiedad de tipo de contenido viene un contenido
+    //TODO: A la hora de devolver la infromacion añadir informacion extra para que el bot aplique a la hora de buscar en mongo
+    /*
+        {
+            "indice": "",
+            "query": [],
+            "filtro": ""
+        }
+    */
+    console.log(ent_list.indexOf(CONTENT_TYPE))
+    let content_type:string = '';
+    let person_tag:string = '';
+    if(ent_list.indexOf(CONTENT_TYPE) > -1) {
+        let fields:Array<string> = ["content_type"];//buscar en el titutlo y en el titulo original
+        let search_data: string = entities[ent_list.indexOf(CONTENT_TYPE)].entity;
+        let index: string = CONTENT_TYPE_INDEX;
+        search_elastic(fields, search_data, index).then( (result: any) => {
+            content_type = result.hits.hits[0]._source.content_type
+        });
+    }
+    if(ent_list.indexOf(PERSON_TAG) > -1) {
+        let fields:Array<string> = ["job"];//buscar en el titutlo y en el titulo original
+        let search_data: string = entities[ent_list.indexOf(PERSON_TAG)].entity;
+        let index: string = PERSON_TAG_INDEX;
+        search_elastic(fields, search_data, index).then( (result: any) => {
+            content_type = result.hits.hits[0]._source.job
+        });
+    }
     
-    if( ent_list.indexOf(FILM_ENTITY) > 0){
-
-    }else if( ent_list.indexOf(SERIE_ENTITY) > 0){
-
-    }else if( ent_list.indexOf(FILM_ENTITY) > 0){
-
-    }else if( ent_list.indexOf(ACTOR_ENTITY) > 0 || ent_list.indexOf(DIRECTOR_ENTITY) > 0){
-
-    }else if( ent_list.indexOf(CORTO_ENTITY) > 0){
-
+    if( content_type.indexOf(FILM_ENTITY) > -1){
+        let fields:Array<string> = ["primaryTitle", "originalTitle"];//buscar en el titutlo y en el titulo original
+        let search_data: string = entities[ent_list.indexOf('titulo')].entity;
+        let index: string = FILM_INDEX;
+        search_elastic(fields, search_data, index).then( (result: any) => {
+            res_resolve(result)
+        });
+    }else if( content_type.indexOf(SERIE_ENTITY) > -1){
+        let fields:Array<string> = ["primaryTitle", "originalTitle"];
+        let search_data: string = entities[ent_list.indexOf('titulo')].entity;
+        let index: string = SERIES_INDEX;
+        search_elastic(fields, search_data, index).then( (result: any) => {
+            res_resolve(result)
+        });
+    }else if( person_tag.indexOf(ACTOR_ENTITY) > -1 || person_tag.indexOf(DIRECTOR_ENTITY) > -1){
+        let fields:Array<string> = ['primaryName'];
+        let search_data: string = entities[ent_list.indexOf('persona')].entity;
+        let index: string = PEOPLE_INDEX;
+        search_elastic(fields, search_data, index).then( (result: any) => {
+            res_resolve(result)
+        });
+    }else if( content_type.indexOf(CORTO_ENTITY) > -1){
+        let fields:Array<string> = ["primaryTitle", "originalTitle"];
+        let search_data: string = entities[ent_list.indexOf('titulo')].entity;
+        let index: string = OTHERS_INDEX;
+        search_elastic(fields, search_data, index).then( (result: any) => {
+            res_resolve(result)
+        });
     }else{
-
+        
+        if(ent_list.indexOf('titulo') > -1){
+            search_all(entities[ent_list.indexOf('titulo')].entity).then( (result: any) => {
+                res_resolve(result)
+            });
+        }else if(ent_list.indexOf('titulo') > -1){
+            search_all(entities[ent_list.indexOf('persona')].entity).then( (result: any) => {
+                res_resolve(result)
+            });
+        }
     }
 }
 
 let recom_intent = (res_resolve: any, entities: any) => {
 
+}
+
+let search_elastic = (fields: Array<String>, search_data: string, index: string) => {
+    
+    let multi_match = {
+        fields: fields,
+        query: search_data,
+        fuzziness: 1,
+    }
+    let highlight_fields: any = {}
+    fields.forEach( (field: any) => {
+        if(!_.has(highlight_fields, field)){
+            highlight_fields[field] = {}
+        }
+    });
+    let body = {
+        size: 5,
+        from: 0,
+        query: { multi_match },
+        highlight: { fields: highlight_fields }
+    };
+    console.log('__BODY__');
+    console.dir( body, {depth: null});
+
+    return search(index, body)
+        .then((results: any) => {
+            
+            console.log('__PRIMER_RESULT__');
+            console.dir(results, { depth: null });
+            return results;
+            //res_resolve.send(results);
+            
+        });
+}
+
+let search_all = (search_data: string) => {
+    let async_arr: any = []
+        async_arr.push(search_elastic(["primaryTitle", "originalTitle"], search_data, FILM_INDEX))
+        async_arr.push(search_elastic(["primaryTitle", "originalTitle"], search_data, SERIES_INDEX))
+        async_arr.push(search_elastic(['primaryName'], search_data, PEOPLE_INDEX))
+
+        return Promise.all(async_arr).then(values => { 
+            console.log(values);
+            //TODO: devolver el mejor valor
+          });
 }
 
 let ner_and_elastic = (item: string, res_resolve: any, enviar: boolean, fuzzy?: number, useFuzzyValue?: number) => {

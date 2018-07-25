@@ -15,6 +15,8 @@ export interface INerResult {
 	raw: string;
 }
 
+
+
 export function getNerResponse(opts: INerOptions, text: string, callback: (err: Error, result: INerResult) => void) {
 	var socket = new net.Socket();
 
@@ -26,8 +28,14 @@ export function getNerResponse(opts: INerOptions, text: string, callback: (err: 
 	socket.on('data', (data: any) => {
 		let re = /<([A-Z]+?)>(.+?)<\/\1>/g;
 		let str: string = data.toString();
+		console.log('ner_get_string');
 		console.log(str);
-		let res: INerResult;
+		let res: INerResult = {
+			'raw': '',
+			'parsed': [],
+			'entities': null
+		};
+		console.log(res);
 		res.raw = str;
 
 		let m;
@@ -46,6 +54,8 @@ export function getNerResponse(opts: INerOptions, text: string, callback: (err: 
 
 		res.parsed = parsed;
 		res.entities = entities;
+		console.log('res0');
+		console.log(res);
 		socket.destroy();
 		callback(undefined, res);
 	});

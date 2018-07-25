@@ -1,0 +1,66 @@
+[
+            {
+                "id": 10759,
+                "name": "accion y aventura"
+            },
+            {
+                "id": 16,
+                "name": "animacion"
+            },
+            {
+                "id": 35,
+                "name": "comedia"
+            },
+            {
+                "id": 80,
+                "name": "crimen"
+            },
+            {
+                "id": 99,
+                "name": "documental"
+            },
+            {
+                "id": 18,
+                "name": "drama"
+            },
+            {
+                "id": 10751,
+                "name": "familia"
+            },
+            {
+                "id": 10762,
+                "name": "niños"
+            },
+            {
+                "id": 9648,
+                "name": "misterio"
+            },
+            {
+                "id": 10763,
+                "name": "noticias"
+            },
+            {
+                "id": 10764,
+                "name": "reality"
+            },
+            {
+                "id": 10765,
+                "name": "ciencia ficcion y fantasia"
+            },
+            {
+                "id": 10766,
+                "name": "telenovela"
+            },
+            {
+                "id": 10767,
+                "name": "entrevistas"
+            },
+            {
+                "id": 10768,
+                "name": "guerra y politica"
+            },
+            {
+                "id": 37,
+                "name": "western"
+            }
+        ]
