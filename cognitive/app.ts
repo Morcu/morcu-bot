@@ -30,9 +30,14 @@ const CONTENT_TYPE_INDEX = 'content_types';
 const PERSON_TAG = 'jobs';
 const PERSON_TAG_INDEX = 'jobs';
 //Conexion con elasticsearch
-
+/*
 const esClient = new elasticsearch.Client({
     host: 'elasticsearch:9200',
+    log: 'error'
+});
+*/
+const esClient = new elasticsearch.Client({
+    host: 'localhost:9200',
     log: 'error'
 });
 
@@ -389,72 +394,95 @@ let find_intent = (res_resolve: any, entities: any) => {
         }
     */
     console.log(ent_list.indexOf(CONTENT_TYPE))
-    let content_type:string = '';
-    let person_tag:string = '';
+    let content_type:any = [];let person_tag:string = '';
     if(ent_list.indexOf(CONTENT_TYPE) > -1) {
         let fields:Array<string> = ["content_type"];//buscar en el titutlo y en el titulo original
         let search_data: string = entities[ent_list.indexOf(CONTENT_TYPE)].entity;
         let index: string = CONTENT_TYPE_INDEX;
-        search_elastic(fields, search_data, index).then( (result: any) => {
+        content_type.push(search_elastic(fields, search_data, index))/*.then( (result: any) => {
             content_type = result.hits.hits[0]._source.content_type
-        });
+        });*/
     }
     if(ent_list.indexOf(PERSON_TAG) > -1) {
         let fields:Array<string> = ["job"];//buscar en el titutlo y en el titulo original
         let search_data: string = entities[ent_list.indexOf(PERSON_TAG)].entity;
         let index: string = PERSON_TAG_INDEX;
-        search_elastic(fields, search_data, index).then( (result: any) => {
+        content_type.push(search_elastic(fields, search_data, index))/*.then( (result: any) => {
             content_type = result.hits.hits[0]._source.job
-        });
+        });*/
     }
-    
-    if( content_type.indexOf(FILM_ENTITY) > -1){
-        let fields:Array<string> = ["primaryTitle", "originalTitle"];//buscar en el titutlo y en el titulo original
-        let search_data: string = entities[ent_list.indexOf('titulo')].entity;
-        let index: string = FILM_INDEX;
-        search_elastic(fields, search_data, index).then( (result: any) => {
-            res_resolve(result)
+    Promise.all(content_type).then(values => {
+        console.log('__PROMISE__', _.has(values[0], 'hits.hits[0]._source.content_type'))
+        let tag = values.map((item:any) => {
+            return _.has(item, 'hits.hits[0]._source.content_type') ? item.hits.hits[0]._source.content_type : item.hits.hits[0]._source.job
         });
-    }else if( content_type.indexOf(SERIE_ENTITY) > -1){
-        let fields:Array<string> = ["primaryTitle", "originalTitle"];
-        let search_data: string = entities[ent_list.indexOf('titulo')].entity;
-        let index: string = SERIES_INDEX;
-        search_elastic(fields, search_data, index).then( (result: any) => {
-            res_resolve(result)
-        });
-    }else if( person_tag.indexOf(ACTOR_ENTITY) > -1 || person_tag.indexOf(DIRECTOR_ENTITY) > -1){
-        let fields:Array<string> = ['primaryName'];
-        let search_data: string = entities[ent_list.indexOf('persona')].entity;
-        let index: string = PEOPLE_INDEX;
-        search_elastic(fields, search_data, index).then( (result: any) => {
-            res_resolve(result)
-        });
-    }else if( content_type.indexOf(CORTO_ENTITY) > -1){
-        let fields:Array<string> = ["primaryTitle", "originalTitle"];
-        let search_data: string = entities[ent_list.indexOf('titulo')].entity;
-        let index: string = OTHERS_INDEX;
-        search_elastic(fields, search_data, index).then( (result: any) => {
-            res_resolve(result)
-        });
-    }else{
-        
-        if(ent_list.indexOf('titulo') > -1){
-            search_all(entities[ent_list.indexOf('titulo')].entity).then( (result: any) => {
-                res_resolve(result)
+        console.log('__PROMISE__', content_type)
+        if( tag.indexOf(FILM_ENTITY) > -1){
+            let fields:Array<string> = ["primaryTitle", "originalTitle"];//buscar en el titutlo y en el titulo original
+            let search_data: string = entities[ent_list.indexOf('titulo')].entity;
+            let index: string = FILM_INDEX;
+            console.log('el resiltado');
+            search_elastic(fields, search_data, index).then( (result: any) => {
+                console.log('el resiltado', result)
+                res_resolve.send(build_response(result, "tconst", "film", ["movie","tvMovie","video","videoGame"]));
             });
-        }else if(ent_list.indexOf('titulo') > -1){
-            search_all(entities[ent_list.indexOf('persona')].entity).then( (result: any) => {
-                res_resolve(result)
+        }else if( tag.indexOf(SERIE_ENTITY) > -1){
+            let fields:Array<string> = ["primaryTitle", "originalTitle"];
+            let search_data: string = entities[ent_list.indexOf('titulo')].entity;
+            let index: string = SERIES_INDEX;
+            search_elastic(fields, search_data, index).then( (result: any) => {
+                res_resolve.send(build_response(result, "tconst", "film", ["tvEpisode","tvSeries","tvMiniSeries"]));
             });
+        }else if( tag.indexOf(ACTOR_ENTITY) > -1 || tag.indexOf(DIRECTOR_ENTITY) > -1){
+            //TODO: SOFISTICARLO PARA HACER QUE SEPARE ENTRE ACTORES Y DIRECTORES
+            let fields:Array<string> = ['primaryName'];
+            let search_data: string = entities[ent_list.indexOf('persona')].entity;
+            let index: string = PEOPLE_INDEX;
+            search_elastic(fields, search_data, index).then( (result: any) => {
+                res_resolve.send(build_response(result, "nconst", "names", []));
+            });
+        }else if( tag.indexOf(CORTO_ENTITY) > -1){
+            let fields:Array<string> = ["primaryTitle", "originalTitle"];
+            let search_data: string = entities[ent_list.indexOf('titulo')].entity;
+            let index: string = OTHERS_INDEX;
+            search_elastic(fields, search_data, index).then( (result: any) => {
+                res_resolve.send(build_response(result, "tconst", "film", ["short","tvShort","tvSpecial"]));
+            });
+        }else{
+            //TODO: CALCULAR DE ALGUNA FORMA EL RANKING Y OBTENER EL FILTRO Y EL INDICE DE MONGO DEL MEJOR
+            if(tag.indexOf('titulo') > -1){
+                search_all(entities[ent_list.indexOf('titulo')].entity).then( (result: any) => {
+                    res_resolve.send(build_response(result, "tconst", "film", []));
+                });
+            }else if(tag.indexOf('persona') > -1){
+                search_all(entities[ent_list.indexOf('persona')].entity).then( (result: any) => {
+                    res_resolve.send(build_response(result, "tconst", "film", []));
+                });
+            }
         }
-    }
+    })
+    
 }
 
 let recom_intent = (res_resolve: any, entities: any) => {
 
 }
 
-let search_elastic = (fields: Array<String>, search_data: string, index: string) => {
+let build_response = (response: any, response_field:string, mongo_index: string, mongo_filter:Array<string>) => {
+    
+    let res: any = {
+        "index": mongo_index,
+        "query": [],
+        "filt": mongo_filter,
+        "field": response_field
+    }
+    res.query = response.hits.hits.map((values:any ) => {
+        return values._source[response_field];
+    });
+    return res;
+}
+
+let search_elastic = (fields: Array<String>, search_data: string, index: string):any => {
     
     let multi_match = {
         fields: fields,
@@ -481,6 +509,7 @@ let search_elastic = (fields: Array<String>, search_data: string, index: string)
             
             console.log('__PRIMER_RESULT__');
             console.dir(results, { depth: null });
+            console.log('__RES_RESULT__');
             return results;
             //res_resolve.send(results);
             
