@@ -29,6 +29,8 @@ const CONTENT_TYPE = 'content_types';
 const CONTENT_TYPE_INDEX = 'content_types';
 const PERSON_TAG = 'jobs';
 const PERSON_TAG_INDEX = 'jobs';
+const GENRES_TAG = 'genero';
+const GENRES_TAG_INDEX = 'film_genres';
 //Conexion con elasticsearch
 /*
 const esClient = new elasticsearch.Client({
@@ -127,7 +129,7 @@ app.post('/cognitiveService/getDataFromEntity', function (req: any, res: any) {
 
 //Hace que todos los gets dado el path sea redireccionado al puerto indicado en port
 
-var port = 6787;
+var port = 6789;
 app.listen(port, function () {
     console.log('CognitiveService listening on port ' + port + '!')
 });
@@ -386,6 +388,7 @@ let find_intent = (res_resolve: any, entities: any) => {
     console.log(ent_list)
     //TODO: Comprobar que junto a la entiedad de tipo de contenido viene un contenido
     //TODO: A la hora de devolver la infromacion añadir informacion extra para que el bot aplique a la hora de buscar en mongo
+    //TODO: Filtrar las respuestas por debajo de un umbral
     /*
         {
             "indice": "",
@@ -394,22 +397,18 @@ let find_intent = (res_resolve: any, entities: any) => {
         }
     */
     console.log(ent_list.indexOf(CONTENT_TYPE))
-    let content_type:any = [];let person_tag:string = '';
+    let content_type:any = [];
     if(ent_list.indexOf(CONTENT_TYPE) > -1) {
         let fields:Array<string> = ["content_type"];//buscar en el titutlo y en el titulo original
         let search_data: string = entities[ent_list.indexOf(CONTENT_TYPE)].entity;
         let index: string = CONTENT_TYPE_INDEX;
-        content_type.push(search_elastic(fields, search_data, index))/*.then( (result: any) => {
-            content_type = result.hits.hits[0]._source.content_type
-        });*/
+        content_type.push(search_elastic(fields, search_data, index))
     }
     if(ent_list.indexOf(PERSON_TAG) > -1) {
         let fields:Array<string> = ["job"];//buscar en el titutlo y en el titulo original
         let search_data: string = entities[ent_list.indexOf(PERSON_TAG)].entity;
         let index: string = PERSON_TAG_INDEX;
-        content_type.push(search_elastic(fields, search_data, index))/*.then( (result: any) => {
-            content_type = result.hits.hits[0]._source.job
-        });*/
+        content_type.push(search_elastic(fields, search_data, index))
     }
     Promise.all(content_type).then(values => {
         console.log('__PROMISE__', _.has(values[0], 'hits.hits[0]._source.content_type'))
@@ -465,7 +464,53 @@ let find_intent = (res_resolve: any, entities: any) => {
 }
 
 let recom_intent = (res_resolve: any, entities: any) => {
-
+    let ent_list = entities.map( (entity: any) => {
+        return entity.type;
+    });
+    let tagged_result:any = []
+    if(ent_list.indexOf(CONTENT_TYPE) > -1) {
+        let fields:Array<string> = ["content_type"];//buscar en el titutlo y en el titulo original
+        let search_data: string = entities[ent_list.indexOf(CONTENT_TYPE)].entity;
+        let index: string = CONTENT_TYPE_INDEX;
+        tagged_result.push(search_elastic(fields, search_data, index))
+    }
+    if(ent_list.indexOf(GENRES_TAG) > -1) {
+        let fields:Array<string> = ["name"];
+        let search_data: string = entities[ent_list.indexOf(GENRES_TAG)].entity;
+        let index: string = GENRES_TAG_INDEX;
+        tagged_result.push(search_elastic(fields, search_data, index))
+    }
+    
+    Promise.all(tagged_result).then(values => {
+        console.log('__PROMISE__', _.has(values[0], 'hits.hits[0]._source.content_type'))
+        let tag = values.map((item:any) => {
+            return _.has(item, 'hits.hits[0]._source.content_type') ? item.hits.hits[0]._source.content_type : GENRES_TAG
+        });
+        if( tag.indexOf(FILM_ENTITY) > -1){
+            let fields:Array<string> = ["primaryTitle", "originalTitle"];//buscar en el titutlo y en el titulo original
+            let search_data: string = entities[ent_list.indexOf('titulo')].entity;
+            let index: string = FILM_INDEX;
+            console.log('el recc2c');
+            search_elastic(fields, search_data, index).then( (result: any) => {
+                console.log('el recc2c', result)
+                //devolver el original title
+                res_resolve.send({
+                    "film_title": result.hits.hits[0]._source.originalTitle
+                })
+            });
+        }else if( tag.indexOf(GENRES_TAG) > -1){
+            //devolver el genero
+            let genre = values.filter((item:any) => {
+                return _.has(item, 'hits.hits[0]._source.name');
+            }).map((filtered_values:any) => {
+                return filtered_values.hits.hits[0]._source.name;
+            });
+            res_resolve.send({
+                "genre": genre[0]
+            })
+        }
+    });
+    
 }
 
 let build_response = (response: any, response_field:string, mongo_index: string, mongo_filter:Array<string>) => {
@@ -476,6 +521,7 @@ let build_response = (response: any, response_field:string, mongo_index: string,
         "filt": mongo_filter,
         "field": response_field
     }
+    //TODO: usar  filter para limpiar los valores que esten por debajo de un umbral
     res.query = response.hits.hits.map((values:any ) => {
         return values._source[response_field];
     });

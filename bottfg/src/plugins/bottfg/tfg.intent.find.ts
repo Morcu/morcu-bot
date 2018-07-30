@@ -8,14 +8,35 @@ var rp = require('request-promise');
 var _ = require('lodash');
 const base_image_url = 'http://image.tmdb.org/t/p/original/';
 let INTENT_ID = 'saludo';
+var MongoClient = require('mongodb').MongoClient;
+var mongo_url = 'mongodb://localhost:27017/';
 
+
+const req_url = 'http://localhost:6789/cognitiveService/getDataFromEntity/';
+//const req_url = 'http://cognitive:6789/cognitiveService/ne/';
+const key = '4e894a5bee711efd3c75378759b6d3af';
+const language = 'es';
+const external_source = 'imdb_id';
+const find_url = 'https://api.themoviedb.org/3/find/';
 // This dialog is managed by this discrete steps
 export default [
     find
 ];
 
+interface IcognitiveResp {
+    index: string;
+    query: Array<string>;
+    filt: Array<string>;
+    field: string;
+}
+
 function find(session: BotBuilder.Session, args: any, next: Function) {
     session.sendTyping();
+    console.log('__LOS ARGUMENTOS__');
+    console.log(args);
+
+    //TODO:REMOVE
+    args.entities[0].type = 'content_types';
     //Variables para el mensaje
     let intent = {
         id: args.intent,
@@ -51,94 +72,70 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
     };
     console.log('entities');
     console.dir(args.entities, {depth: null});
-    //Comprueba que tipo de contenido es (pelicula/serie)
-    let filt = args.entities.filter((elem: any) => {
-        return elem.type === 'tipoContenido';
-    });
-    //Si ha dicho algun tipo de contenido
-    if (!_.isEmpty(filt)) {
+    var options = {
+        method: 'POST',
+        uri: req_url,
+        body: args,
+        json: true // Automatically parses the JSON string in the response
+    };
 
-        //Extraen las entidades
-        let values = args.entities.filter((elem: any) => {
-            return elem.type === 'titulo';
-        }).map((elem_ch: any) => {
-            return elem_ch.entity;
-        });
-
-        //TODO: Sofisticar la busqueda para que devuelva mas de 1?
-
-        //Peticion para obtener la pelicula de Elastic + NER
-        console.log(values);
-        const req_url = 'http://localhost:6789/cognitiveService/ne/';
-        //const req_url = 'http://cognitive:6789/cognitiveService/ne/';
-        const key = '4e894a5bee711efd3c75378759b6d3af';
-        const language = 'es';
-        const external_source = 'imdb_id';
-        const find_url = 'https://api.themoviedb.org/3/find/';
-        var options = {
-            uri: req_url + session.message.text,
-            headers: {
-                'User-Agent': 'Request-Promise'
-            },
-            json: true // Automatically parses the JSON string in the response
-        };
-
-        rp(options)
-            .then((data: any) => {
-                console.log('datos');
-                console.log(data);
-                let film = data.hits.hits.filter((filt: any) => {
-                    return filt.cert > 0.75 || true;
-                });
-                //let film = _.sortBy(filt, ['_source.startYear']).reverse();
-                console.log(film);
-                console.log('-----------------------------------film-----------------------------------');
-
-                //Peticion a tmdb para obtener la imagen y datos diversos
-                var options = {
-                    uri: find_url + film[0]._source.tconst,
-                    qs: {
-                        api_key: key,
-                        language: language,
-                        external_source: external_source
-                    },
-                    headers: {
-                        'User-Agent': 'Request-Promise'
-                    },
-                    json: true
-                };
-                console.log(find_url + data.hits.hits[0]._source.tconst);
-                console.log(film[0]._source.tconst);
-                return rp(options).then((rest_data: any) => {
-                    console.log(rest_data);
-                    //Si hay resultados se monta elmensaje
-                    if ( !_.isEmpty(rest_data['movie_results'], true)) {
-                        //console.log(rest_data['movie_results'])
-                        console.log(rest_data.movie_results[0].original_title);
-                        console.log( base_image_url +  rest_data.movie_results[0].poster_path);
-                        channelData.attachment.push({
-                            title: rest_data.movie_results[0].original_title,
-                            image_url: base_image_url +  rest_data.movie_results[0].poster_path
-                        });
-                        let msgText = new BotBuilder.Message(session)
-                        .sourceEvent({
-                            directline: channelData
-                        });
-                        session.send(msgText);
-                        return rest_data['movie_results'];
-                    } else {
-                        return null;
-                    }
-                }).catch((err: any) => {
-                    console.log(err);
-                });
-            })
-            .catch((err: Error) => {
-                console.log('Error' + err);
+    rp(options)
+        .then((cognitive_response: IcognitiveResp) => {
+            console.log('datos');
+            console.log(cognitive_response);
+        //Peticion a tmdb para obtener la imagen y datos diversos
+        let tmdb_resp = cognitive_response.query.map((value_q: string) => {
+            var options = {
+                uri: find_url + value_q,
+                qs: {
+                    api_key: key,
+                    language: language,
+                    external_source: external_source
+                },
+                headers: {
+                    'User-Agent': 'Request-Promise'
+                },
+                json: true
+            };
+            return rp(options).then((rest_data: any) => {
+                console.log(rest_data, !_.isEmpty(rest_data['movie_results']));
+                //Si hay resultados se monta elmensaje
+                if ( !_.isEmpty(rest_data['movie_results'])) {
+                    //console.log(rest_data['movie_results'])
+                    return rest_data['movie_results'];
+                } else {
+                    return null;
+                }
+            }).catch((err: any) => {
+                console.log(err);
             });
-
-    }
+            /*  console.log(rest_data.movie_results[0].original_title);
+                    console.log( base_image_url +  rest_data.movie_results[0].poster_path);
+                    channelData.attachment.push({
+                        title: rest_data.movie_results[0].original_title,
+                        image_url: base_image_url +  rest_data.movie_results[0].poster_path
+                    });
+                    let msgText = new BotBuilder.Message(session)
+                    .sourceEvent({
+                        directline: channelData
+                    });
+                    session.send(msgText);*/
+        });
+        Promise.all(tmdb_resp).then( (resp: any) => {
+            console.log(_.remove(resp, null));
+        });
+    });
 }
-
-
-
+/*
+let get_mongo_data_from_cognitive = (cognitive_response: IcognitiveResp): any => {
+    MongoClient.connect(mongo_url, function(err, db) {
+        if (err) { throw err; }
+        var dbo = db.db('film_data');
+        let response = cognitive_response.query.map((value_q: string) => {
+            return dbo.collection(cognitive_response.index).find({ cognitive_response.field: value_q});
+        });
+        db.close();
+        return response;
+      });
+};
+*/
