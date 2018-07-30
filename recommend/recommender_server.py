@@ -18,7 +18,7 @@ indices = None
 cosine_sim_cb = None
 cosine_sim_r = None
 smd = None
-
+md = None
 
 def main():
 
@@ -27,6 +27,16 @@ def main():
     global cosine_sim_cb
     global cosine_sim_r
     global smd
+    global g_md
+    g_md = pd.read_csv('movies_metadata.csv')
+    g_md = g_md.drop([19730, 29503, 35587])
+    # Rellena con [] si no hay valor y si lo hay extrae los generos y los guarda en genres
+    g_md['genres'] = g_md['genres'].fillna('[]').apply(literal_eval).apply(
+        lambda x: [i['name'] for i in x] if isinstance(x, list) else [])
+    g_md['year'] = pd.to_datetime(g_md['release_date'], errors='coerce').apply(
+        lambda x: str(x).split('-')[0] if x != np.nan else np.nan)
+
+
     md = pd.read_csv('movies_metadata.csv')
     md = md.drop([19730, 29503, 35587])
     print(md.shape)
@@ -137,6 +147,7 @@ def get_recommendations(title, indices, cosine_sim, titles, smd):
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:31]
     movie_indices = [i[0] for i in sim_scores]
+    print(movie_indices)
     return smd.iloc[movie_indices].imdb_id
 
 
@@ -191,6 +202,32 @@ def improved_recommendations(title, indices, cosine_sim, smd):
     return order_f
 
 
+def build_chart(genre, gen_md, smd, percentile=0.85):
+    df = gen_md[gen_md['genre'] == genre]
+    vote_counts = df[df['vote_count'].notnull()]['vote_count'].astype('int')
+    vote_averages = df[df['vote_average'].notnull()]['vote_average'].astype('int')
+    C = vote_averages.mean()
+    m = vote_counts.quantile(percentile)
+
+    qualified = df[(df['vote_count'] >= m) & (df['vote_count'].notnull()) & (df['vote_average'].notnull())][
+        ['title', 'year', 'vote_count', 'vote_average', 'popularity']]
+    qualified['vote_count'] = qualified['vote_count'].astype('int')
+    qualified['vote_average'] = qualified['vote_average'].astype('int')
+
+    qualified['wr'] = qualified.apply(
+        lambda x: (x['vote_count'] / (x['vote_count'] + m) * x['vote_average']) + (m / (m + x['vote_count']) * C),
+        axis=1)
+    qualified = qualified.sort_values('wr', ascending=False).head(250)
+    #movie_indices = qualified.head(15).title.keys
+    movie_indices = qualified.head(15).index.tolist()
+    print(movie_indices)
+    ret = []
+    for i in movie_indices:
+        try:
+            ret.append(smd.iloc[i].imdb_id)
+        except:
+            pass
+    return ret
 
 class HelloW(Resource):
 
@@ -225,6 +262,7 @@ class Metadata(Resource):
         recomm = json.loads(get_recommendations(str(title), indices, cosine_sim_r, titles, smd).head(10).to_json())
         return [recomm[x]for x in recomm.keys()]
 
+
 class MetadataImproved(Resource):
 
     def get(self):
@@ -238,10 +276,28 @@ class MetadataImproved(Resource):
         return improved_recommendations(str(title), indices, cosine_sim_r, smd)
 
 
+class Genre(Resource):
+
+    def get(self):
+        global titles
+        global indices
+        global cosine_sim_cb
+        global g_md
+        global smd
+
+        title = request.args.get('title')
+        s = g_md.apply(lambda x: pd.Series(x['genres']), axis=1).stack().reset_index(level=1, drop=True)
+        s.name = 'genre'
+        gen_md = g_md.drop('genres', axis=1).join(s)
+
+        return build_chart(title, gen_md, smd)
+
+
 api.add_resource(HelloW, '/helloworld')
 api.add_resource(ContentBased, '/content_based')
 api.add_resource(Metadata, '/metadata')
 api.add_resource(MetadataImproved, '/metadata_i')
+api.add_resource(Genre, '/genre')
 
 if __name__ == "__main__":
     main()

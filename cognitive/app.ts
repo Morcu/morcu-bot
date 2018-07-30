@@ -508,6 +508,8 @@ let recom_intent = (res_resolve: any, entities: any) => {
             res_resolve.send({
                 "genre": genre[0]
             })
+        } else {
+            res_resolve.send({})
         }
     });
     
