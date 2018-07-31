@@ -109,20 +109,23 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
             }).catch((err: any) => {
                 console.log(err);
             });
-            /*  console.log(rest_data.movie_results[0].original_title);
-                    console.log( base_image_url +  rest_data.movie_results[0].poster_path);
-                    channelData.attachment.push({
-                        title: rest_data.movie_results[0].original_title,
-                        image_url: base_image_url +  rest_data.movie_results[0].poster_path
-                    });
-                    let msgText = new BotBuilder.Message(session)
-                    .sourceEvent({
-                        directline: channelData
-                    });
-                    session.send(msgText);*/
         });
         Promise.all(tmdb_resp).then( (resp: any) => {
-            console.log(_.remove(resp, null));
+            let clean_resp = _.flattenDeep(_.remove(resp, null));
+            //console.log(clean_resp);
+            clean_resp.forEach( (item: any) => {
+                console.log(item.original_title);
+                console.log( base_image_url +  item.poster_path);
+                channelData.attachment.push({
+                    title: item.original_title,
+                    image_url: base_image_url +  item.poster_path
+                });
+            });
+            let msgText = new BotBuilder.Message(session)
+            .sourceEvent({
+                directline: channelData
+            });
+            session.send(msgText);
         });
     });
 }

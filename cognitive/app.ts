@@ -29,7 +29,7 @@ const CONTENT_TYPE = 'content_types';
 const CONTENT_TYPE_INDEX = 'content_types';
 const PERSON_TAG = 'jobs';
 const PERSON_TAG_INDEX = 'jobs';
-const GENRES_TAG = 'genero';
+const GENRES_TAG = 'genre';
 const GENRES_TAG_INDEX = 'film_genres';
 //Conexion con elasticsearch
 /*
@@ -486,7 +486,17 @@ let recom_intent = (res_resolve: any, entities: any) => {
         let tag = values.map((item:any) => {
             return _.has(item, 'hits.hits[0]._source.content_type') ? item.hits.hits[0]._source.content_type : GENRES_TAG
         });
-        if( tag.indexOf(FILM_ENTITY) > -1){
+        if( tag.indexOf(GENRES_TAG) > -1){
+            //devolver el genero
+            let genre = values.filter((item:any) => {
+                return _.has(item, 'hits.hits[0]._source.name');
+            }).map((filtered_values:any) => {
+                return filtered_values.hits.hits[0]._source.name;
+            });
+            res_resolve.send({
+                "genre": genre[0]
+            })
+        } else if( tag.indexOf(FILM_ENTITY) > -1){
             let fields:Array<string> = ["primaryTitle", "originalTitle"];//buscar en el titutlo y en el titulo original
             let search_data: string = entities[ent_list.indexOf('titulo')].entity;
             let index: string = FILM_INDEX;
@@ -498,16 +508,6 @@ let recom_intent = (res_resolve: any, entities: any) => {
                     "film_title": result.hits.hits[0]._source.originalTitle
                 })
             });
-        }else if( tag.indexOf(GENRES_TAG) > -1){
-            //devolver el genero
-            let genre = values.filter((item:any) => {
-                return _.has(item, 'hits.hits[0]._source.name');
-            }).map((filtered_values:any) => {
-                return filtered_values.hits.hits[0]._source.name;
-            });
-            res_resolve.send({
-                "genre": genre[0]
-            })
         } else {
             res_resolve.send({})
         }

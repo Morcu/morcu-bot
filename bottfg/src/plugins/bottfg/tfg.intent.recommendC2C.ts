@@ -100,14 +100,17 @@ function recommend(session: BotBuilder.Session, args: any, next: Function) {
                 json: true // Automatically parses the JSON string in the response
             };
             if (_.has(cognitive_response, cognitive_film_title)) {
-                options.qs.title = cognitive_response.cognitive_film_title;
+                options.qs.title = cognitive_response[cognitive_film_title];
                 options.uri += 'metadata_i';
             } else if (_.has(cognitive_response, cognitive_genre)) {
-                options.qs.title = cognitive_response.cognitive_genre;
+                options.qs.title = cognitive_response[cognitive_genre];
                 options.uri += 'genre';
             }
+            console.log(options);
                 rp(options)
                     .then((recom_response: any) => {
+                        console.log('recom response')
+                        console.log(recom_response);
                          //Peticion a tmdb para obtener la imagen y datos diversos
                         let tmdb_resp = recom_response.map((value_q: string) => {
                             var options = {
@@ -120,7 +123,7 @@ function recommend(session: BotBuilder.Session, args: any, next: Function) {
                                 json: true
                             };
                             return rp(options).then((rest_data: any) => {
-                                console.log(rest_data, !_.isEmpty(rest_data['movie_results']));
+                                //console.log(rest_data, !_.isEmpty(rest_data['movie_results']));
                                 //Si hay resultados se monta elmensaje
                                 if ( !_.isEmpty(rest_data['movie_results'])) {
                                     //console.log(rest_data['movie_results'])
@@ -144,7 +147,21 @@ function recommend(session: BotBuilder.Session, args: any, next: Function) {
                                     session.send(msgText);*/
                         });
                         Promise.all(tmdb_resp).then( (resp: any) => {
-                            console.log(_.remove(resp, null));
+                            let clean_resp = _.flattenDeep(_.remove(resp, null));
+                            //console.log(clean_resp);
+                            clean_resp.forEach( (item: any) => {
+                                console.log(item.original_title);
+                                console.log( base_image_url +  item.poster_path);
+                                channelData.attachment.push({
+                                    title: item.original_title,
+                                    image_url: base_image_url +  item.poster_path
+                                });
+                            });
+                            let msgText = new BotBuilder.Message(session)
+                            .sourceEvent({
+                                directline: channelData
+                            });
+                            session.send(msgText);
                         });
                     })
                     .catch(function (err) {
