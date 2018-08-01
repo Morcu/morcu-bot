@@ -109,7 +109,7 @@ function recommend(session: BotBuilder.Session, args: any, next: Function) {
             console.log(options);
                 rp(options)
                     .then((recom_response: any) => {
-                        console.log('recom response')
+                        console.log('recom response');
                         console.log(recom_response);
                          //Peticion a tmdb para obtener la imagen y datos diversos
                         let tmdb_resp = recom_response.map((value_q: string) => {

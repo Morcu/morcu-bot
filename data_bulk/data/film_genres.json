@@ -1,78 +1,97 @@
 [
     {
         "id": 28,
-        "name": "accion"
+        "name": "accion",
+        "en_name": "Action"
     },
     {
         "id": 12,
-        "name": "aventura"
+        "name": "aventura",
+        "en_name": "Adventure"
     },
     {
         "id": 16,
-        "name": "animacion"
+        "name": "animacion",
+        "en_name": "Animation"
     },
     {
         "id": 35,
-        "name": "comedia"
+        "name": "comedia",
+        "en_name": "Comedy"
     },
     {
         "id": 80,
-        "name": "crimen"
+        "name": "crimen",
+        "en_name": "Crime"
     },
     {
         "id": 99,
-        "name": "documental"
+        "name": "documental",
+        "en_name": "Documentary"
     },
     {
         "id": 18,
-        "name": "drama"
+        "name": "drama",
+        "en_name": "Drama"
     },
     {
         "id": 10751,
-        "name": "familia"
+        "name": "familia",
+        "en_name": "Family"
     },
     {
         "id": 14,
-        "name": "fantasia"
+        "name": "fantasia",
+        "en_name": "Fantasy"
     },
     {
         "id": 36,
-        "name": "historia"
+        "name": "historia",
+        "en_name": "History"
     },
     {
         "id": 27,
-        "name": "terror"
+        "name": "terror",
+        "en_name": "Horror"
     },
     {
         "id": 10402,
-        "name": "música"
+        "name": "musica",
+        "en_name": "Music"
     },
     {
         "id": 9648,
-        "name": "misterio"
+        "name": "misterio",
+        "en_name": "Mystery"
     },
     {
         "id": 10749,
-        "name": "romance"
+        "name": "romance",
+        "en_name": "Romance"
     },
     {
         "id": 878,
-        "name": "ciencia ficcion"
+        "name": "ciencia ficcion",
+        "en_name": "Science Fiction"
     },
     {
         "id": 10770,
-        "name": "pelicula de la television"
+        "name": "pelicula de la television",
+        "en_name": "TV Movie"
     },
     {
         "id": 53,
-        "name": "suspense"
+        "name": "suspense",
+        "en_name": "Thriller"
     },
     {
         "id": 10752,
-        "name": "guerra"
+        "name": "guerra",
+        "en_name": "War"
     },
     {
         "id": 37,
-        "name": "western"
+        "name": "western",
+        "en_name": "Western"
     }
 ]

@@ -489,9 +489,9 @@ let recom_intent = (res_resolve: any, entities: any) => {
         if( tag.indexOf(GENRES_TAG) > -1){
             //devolver el genero
             let genre = values.filter((item:any) => {
-                return _.has(item, 'hits.hits[0]._source.name');
+                return _.has(item, 'hits.hits[0]._source.en_name');
             }).map((filtered_values:any) => {
-                return filtered_values.hits.hits[0]._source.name;
+                return filtered_values.hits.hits[0]._source.en_name;
             });
             res_resolve.send({
                 "genre": genre[0]
