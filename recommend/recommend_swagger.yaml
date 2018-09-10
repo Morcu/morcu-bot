@@ -144,10 +144,40 @@ paths:
               $ref: "#/definitions/imdbid_arr"
         400:
           description: "Invalid status value"
-
+  /genre:
+    get:
+      tags:
+      - "genre"
+      summary: "Finds films by genre"
+      #description: "Multiple status values can be provided with comma separated strings"
+      operationId: "find_genre"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "title"
+        in: "query"
+        description: "Original title of the film"
+        required: true
+        type: "string"
+        items:
+          type: "string"
+          enum:
+          - "The godfather"
+          - "inception"
+          - "sold"
+          default: "available"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/imdbid_arr"
+        400:
+          description: "Invalid status value"
   
 definitions:
- 
   imdbid_arr:
       type: string
       enum:
