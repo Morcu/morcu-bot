@@ -1,0 +1,604 @@
+{
+  "luis_schema_version": "3.0.0",
+  "versionId": "0.1",
+  "name": "MorcuBot",
+  "desc": "",
+  "culture": "es-es",
+  "intents": [
+    {
+      "name": "None"
+    },
+    {
+      "name": "tfg.intent.bye"
+    },
+    {
+      "name": "tfg.intent.find"
+    },
+    {
+      "name": "tfg.intent.recommendC2C"
+    },
+    {
+      "name": "tfg.intent.saludo"
+    }
+  ],
+  "entities": [
+    {
+      "name": "content_types",
+      "roles": []
+    },
+    {
+      "name": "genre",
+      "roles": []
+    },
+    {
+      "name": "titulo",
+      "roles": []
+    }
+  ],
+  "composites": [],
+  "closedLists": [],
+  "patternAnyEntities": [],
+  "regex_entities": [],
+  "prebuiltEntities": [],
+  "model_features": [],
+  "regex_features": [],
+  "patterns": [],
+  "utterances": [
+    {
+      "text": "adios",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "adios gracias",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "algo como la pelicula interstellar",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 13,
+          "endPos": 20
+        },
+        {
+          "entity": "titulo",
+          "startPos": 22,
+          "endPos": 33
+        }
+      ]
+    },
+    {
+      "text": "algo como matrix",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "titulo",
+          "startPos": 10,
+          "endPos": 15
+        }
+      ]
+    },
+    {
+      "text": "algo de aventura",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "genre",
+          "startPos": 8,
+          "endPos": 15
+        }
+      ]
+    },
+    {
+      "text": "algo de guerra",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "genre",
+          "startPos": 8,
+          "endPos": 13
+        }
+      ]
+    },
+    {
+      "text": "algo parecido a inception",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "titulo",
+          "startPos": 16,
+          "endPos": 24
+        }
+      ]
+    },
+    {
+      "text": "alguna de ciencia ficcion",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "genre",
+          "startPos": 10,
+          "endPos": 24
+        }
+      ]
+    },
+    {
+      "text": "alguna de crimen",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "genre",
+          "startPos": 10,
+          "endPos": 15
+        }
+      ]
+    },
+    {
+      "text": "alguna peli como memento",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 7,
+          "endPos": 10
+        },
+        {
+          "entity": "titulo",
+          "startPos": 17,
+          "endPos": 23
+        }
+      ]
+    },
+    {
+      "text": "alguna pelicula como pretty woman",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 7,
+          "endPos": 14
+        },
+        {
+          "entity": "titulo",
+          "startPos": 21,
+          "endPos": 32
+        }
+      ]
+    },
+    {
+      "text": "buenas noches",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "buenos dias",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "chao",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "empezar",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "enseñame la pelicula pirates of the caribbean",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 12,
+          "endPos": 19
+        },
+        {
+          "entity": "titulo",
+          "startPos": 21,
+          "endPos": 44
+        }
+      ]
+    },
+    {
+      "text": "enseñame la serie breaking bad",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 12,
+          "endPos": 16
+        },
+        {
+          "entity": "titulo",
+          "startPos": 18,
+          "endPos": 29
+        }
+      ]
+    },
+    {
+      "text": "enseñame the godfather",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "titulo",
+          "startPos": 9,
+          "endPos": 21
+        }
+      ]
+    },
+    {
+      "text": "es todo",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "es todo gracias",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "eso es todo por hoy",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "ey",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "ey bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "gracias",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "gracias adios",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "hasta luego",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "hasta mañana",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "hasta pronto",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "hello",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hey",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hey bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hi",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hi bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola aqui estoy de nuevo",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola buenas tardes",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola buenas tardes bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola buenos dias",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola buenos dias bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola de nuevo",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola de nuevo bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola otra vez",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola otra vez bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "holaaaaa",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hoooola",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "la pelicula toy story",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 3,
+          "endPos": 10
+        },
+        {
+          "entity": "titulo",
+          "startPos": 12,
+          "endPos": 20
+        }
+      ]
+    },
+    {
+      "text": "me voy",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "me voy a dormir",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "nada mas",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "peliculas de accion",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 0,
+          "endPos": 8
+        },
+        {
+          "entity": "genre",
+          "startPos": 13,
+          "endPos": 18
+        }
+      ]
+    },
+    {
+      "text": "peliculas de romance",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 0,
+          "endPos": 8
+        },
+        {
+          "entity": "genre",
+          "startPos": 13,
+          "endPos": 19
+        }
+      ]
+    },
+    {
+      "text": "quiero ver la pelicula thor",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 14,
+          "endPos": 21
+        },
+        {
+          "entity": "titulo",
+          "startPos": 23,
+          "endPos": 26
+        }
+      ]
+    },
+    {
+      "text": "quiero ver la serie friends",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 14,
+          "endPos": 18
+        },
+        {
+          "entity": "titulo",
+          "startPos": 20,
+          "endPos": 26
+        }
+      ]
+    },
+    {
+      "text": "quiero ver stranger things",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "titulo",
+          "startPos": 11,
+          "endPos": 25
+        }
+      ]
+    },
+    {
+      "text": "quiero ver una pelicula de ciencia ficcion",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 15,
+          "endPos": 22
+        },
+        {
+          "entity": "genre",
+          "startPos": 27,
+          "endPos": 41
+        }
+      ]
+    },
+    {
+      "text": "tienes game of thrones",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "titulo",
+          "startPos": 7,
+          "endPos": 21
+        }
+      ]
+    },
+    {
+      "text": "tienes la pelicula arrival",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 10,
+          "endPos": 17
+        },
+        {
+          "entity": "titulo",
+          "startPos": 19,
+          "endPos": 25
+        }
+      ]
+    },
+    {
+      "text": "tienes la serie the big bang theory",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 10,
+          "endPos": 14
+        },
+        {
+          "entity": "titulo",
+          "startPos": 16,
+          "endPos": 34
+        }
+      ]
+    },
+    {
+      "text": "una peli de drama",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 4,
+          "endPos": 7
+        },
+        {
+          "entity": "genre",
+          "startPos": 12,
+          "endPos": 16
+        }
+      ]
+    },
+    {
+      "text": "una peli parecida a gladiator",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 4,
+          "endPos": 7
+        },
+        {
+          "entity": "titulo",
+          "startPos": 20,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "una peli parecida a inception",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 4,
+          "endPos": 7
+        },
+        {
+          "entity": "titulo",
+          "startPos": 20,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "una pelicula parecida a whiplash",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 4,
+          "endPos": 11
+        },
+        {
+          "entity": "titulo",
+          "startPos": 24,
+          "endPos": 31
+        }
+      ]
+    }
+  ]
+}

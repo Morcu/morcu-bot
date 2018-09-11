@@ -1,0 +1,615 @@
+{
+  "luis_schema_version": "3.0.0",
+  "versionId": "0.2",
+  "name": "MorcuBotNER",
+  "desc": "",
+  "culture": "es-es",
+  "intents": [
+    {
+      "name": "None"
+    },
+    {
+      "name": "tfg.intent.bye"
+    },
+    {
+      "name": "tfg.intent.find"
+    },
+    {
+      "name": "tfg.intent.recommendC2C"
+    },
+    {
+      "name": "tfg.intent.saludo"
+    }
+  ],
+  "entities": [
+    {
+      "name": "content_types",
+      "roles": []
+    },
+    {
+      "name": "genre",
+      "roles": []
+    },
+    {
+      "name": "titulo",
+      "roles": []
+    }
+  ],
+  "composites": [],
+  "closedLists": [],
+  "patternAnyEntities": [],
+  "regex_entities": [],
+  "prebuiltEntities": [],
+  "model_features": [],
+  "regex_features": [],
+  "patterns": [],
+  "utterances": [
+    {
+      "text": "<contt>peliculas<contt> de <genre>accion<genre>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 0,
+          "endPos": 22
+        },
+        {
+          "entity": "genre",
+          "startPos": 27,
+          "endPos": 46
+        }
+      ]
+    },
+    {
+      "text": "<contt>peliculas<contt> de <genre>romance<genre>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 0,
+          "endPos": 22
+        },
+        {
+          "entity": "genre",
+          "startPos": 27,
+          "endPos": 47
+        }
+      ]
+    },
+    {
+      "text": "adios",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "adios gracias",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "algo como <title>matrix</title>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "titulo",
+          "startPos": 10,
+          "endPos": 30
+        }
+      ]
+    },
+    {
+      "text": "algo como la <contt>pelicula<contt> <title>interstellar</title>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 13,
+          "endPos": 34
+        },
+        {
+          "entity": "titulo",
+          "startPos": 36,
+          "endPos": 62
+        }
+      ]
+    },
+    {
+      "text": "algo de <genre>aventura<genre>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "genre",
+          "startPos": 8,
+          "endPos": 29
+        }
+      ]
+    },
+    {
+      "text": "algo de <genre>guerra<genre>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "genre",
+          "startPos": 8,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "algo parecido a <title>inception</title>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "titulo",
+          "startPos": 16,
+          "endPos": 39
+        }
+      ]
+    },
+    {
+      "text": "alguna <contt>peli<contt> como <title>memento<title>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 7,
+          "endPos": 24
+        },
+        {
+          "entity": "titulo",
+          "startPos": 31,
+          "endPos": 51
+        }
+      ]
+    },
+    {
+      "text": "alguna <contt>pelicula<contt> como <title>pretty woman<title>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 7,
+          "endPos": 28
+        },
+        {
+          "entity": "titulo",
+          "startPos": 35,
+          "endPos": 60
+        }
+      ]
+    },
+    {
+      "text": "alguna de <genre>ciencia ficcion<genre>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "genre",
+          "startPos": 10,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "alguna de <genre>crimen<genre>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "genre",
+          "startPos": 10,
+          "endPos": 29
+        }
+      ]
+    },
+    {
+      "text": "buenas noches",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "chao",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "empezar",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "enseñame <title>the godfather</title>",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "titulo",
+          "startPos": 9,
+          "endPos": 36
+        }
+      ]
+    },
+    {
+      "text": "enseñame la <contt>pelicula</contt> <title>pirates of the caribbean</title>",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 12,
+          "endPos": 34
+        },
+        {
+          "entity": "titulo",
+          "startPos": 36,
+          "endPos": 74
+        }
+      ]
+    },
+    {
+      "text": "enseñame la <contt>serie</contt> <title>breaking bad</title>",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 12,
+          "endPos": 31
+        },
+        {
+          "entity": "titulo",
+          "startPos": 33,
+          "endPos": 59
+        }
+      ]
+    },
+    {
+      "text": "es todo",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "es todo gracias",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "eso es todo por hoy",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "ey",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "ey bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "gracias",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "gracias adios",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "hasta luego",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "hasta mañana",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "hasta pronto",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "hello",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hey",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hey bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hi",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hi bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola aqui estoy de nuevo",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola buenas tardes",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola buenas tardes bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola buenos dias",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola buenos dias bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola de nuevo",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola de nuevo bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola otra vez",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hola otra vez bot",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "holaaaaa",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "hoooola",
+      "intent": "tfg.intent.saludo",
+      "entities": []
+    },
+    {
+      "text": "la <contt>pelicula</contt> <title>toy story</title>",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 3,
+          "endPos": 25
+        },
+        {
+          "entity": "titulo",
+          "startPos": 27,
+          "endPos": 50
+        }
+      ]
+    },
+    {
+      "text": "me voy",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "me voy a dormir",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "nada mas",
+      "intent": "tfg.intent.bye",
+      "entities": []
+    },
+    {
+      "text": "quiero ver <title>stranger things</title>",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "titulo",
+          "startPos": 11,
+          "endPos": 40
+        }
+      ]
+    },
+    {
+      "text": "quiero ver la <contt>pelicula</contt> <title>thor</title>",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 14,
+          "endPos": 36
+        },
+        {
+          "entity": "titulo",
+          "startPos": 38,
+          "endPos": 56
+        }
+      ]
+    },
+    {
+      "text": "quiero ver la <contt>serie</contt> <title>friends</title>",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 14,
+          "endPos": 33
+        },
+        {
+          "entity": "titulo",
+          "startPos": 35,
+          "endPos": 56
+        }
+      ]
+    },
+    {
+      "text": "quiero ver una <contt>pelicula<contt> de <genre>ciencia ficcion<genre>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 15,
+          "endPos": 36
+        },
+        {
+          "entity": "genre",
+          "startPos": 41,
+          "endPos": 69
+        }
+      ]
+    },
+    {
+      "text": "tienes <title>game of thrones</title>",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "titulo",
+          "startPos": 7,
+          "endPos": 36
+        }
+      ]
+    },
+    {
+      "text": "tienes la <contt>pelicula</contt> <title>arrival</title>",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 10,
+          "endPos": 32
+        },
+        {
+          "entity": "titulo",
+          "startPos": 34,
+          "endPos": 55
+        }
+      ]
+    },
+    {
+      "text": "tienes la <contt>serie</contt> <title>the big bang theory</title>",
+      "intent": "tfg.intent.find",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 10,
+          "endPos": 29
+        },
+        {
+          "entity": "titulo",
+          "startPos": 31,
+          "endPos": 64
+        }
+      ]
+    },
+    {
+      "text": "una <contt>peli<contt> de <genre>drama<genre>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 4,
+          "endPos": 21
+        },
+        {
+          "entity": "genre",
+          "startPos": 26,
+          "endPos": 44
+        }
+      ]
+    },
+    {
+      "text": "una <contt>peli<contt> parecida a <title>gladiator<title>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 4,
+          "endPos": 21
+        },
+        {
+          "entity": "titulo",
+          "startPos": 34,
+          "endPos": 56
+        }
+      ]
+    },
+    {
+      "text": "una <contt>peli<contt> parecida a <title>inception<title>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 4,
+          "endPos": 21
+        },
+        {
+          "entity": "titulo",
+          "startPos": 34,
+          "endPos": 56
+        }
+      ]
+    },
+    {
+      "text": "una <contt>peli<contt> parecida a <title>pirates of the caribean</title>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 4,
+          "endPos": 21
+        },
+        {
+          "entity": "titulo",
+          "startPos": 34,
+          "endPos": 71
+        }
+      ]
+    },
+    {
+      "text": "una <contt>pelicula<contt> parecida a <title>whiplash<title>",
+      "intent": "tfg.intent.recommendC2C",
+      "entities": [
+        {
+          "entity": "content_types",
+          "startPos": 4,
+          "endPos": 25
+        },
+        {
+          "entity": "titulo",
+          "startPos": 38,
+          "endPos": 59
+        }
+      ]
+    }
+  ]
+}
