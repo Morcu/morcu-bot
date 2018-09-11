@@ -1,50 +1,150 @@
 quiero	O
 ver	O
 la	O
-pelicula	TCONT
-inception	TPEL
+pelicula	CONTT
+inception	TITLE
 
 me	O
 gustaria	O
 ver	O
 la	O
-pelicula	TCONT
-thor	TPEL
+pelicula	CONTT
+thor	TITLE
 
 quiero	O
 ver	O
 la	O
-pelicula	TCONT
-arrival	TPEL
+pelicula	CONTT
+arrival	TITLE
 
 quiero	O
 ver	O
 la	O
-pelicula	TCONT
-the	TPEL
-goodfather	TPEL
+pelicula	CONTT
+the	TITLE
+goodfather	TITLE
 
 me	O
 gustaria	O
 ver	O
 la	O
-pelicula	TCONT
-batman	TPEL
+pelicula	CONTT
+batman	TITLE
 
 tienes	O
 la	O
-pelicula	TCONT
-pulp	TPEL
-fiction	TPEL
+pelicula	CONTT
+pulp	TITLE
+fiction	TITLE
 
 algo	O
 parecido	O
 a	O
-inception	TPEL
+inception	TITLE
 
 una	O
-peli	TCONT
+peli	CONTT
 parecida	O
 a	O
-inception	TPEL
+inception	TITLE
+
+enseñame	O
+la	O
+serie	CONTT
+the	TITLE
+big	TITLE
+bang	TITLE
+theory	TITLE
+
+enseñame	O
+la	O
+pelicula	CONTT
+inception	TITLE
+
+algo	O
+como	O
+memento	TITLE
+
+algo	O
+como	O
+matrix	TITLE
+
+algo	O
+como	O
+la	O
+pelicula	CONTT
+toy	TITLE
+story	TITLE
+
+alguna	O
+como	O
+la	O
+serie	CONTT
+friends	TITLE
+
+una	O
+peli	CONTT
+como	O
+pirates	TITLE
+of	TITLE
+the	TITLE
+caribean	TITLE
+
+una	O
+peli	CONTT
+parecida	O
+a	O
+gladiator	TITLE
+
+una	O
+serie	CONTT
+parecida	O
+a	O
+game	TITLE
+of	TITLE
+thrones	TITLE
+
+alguna	O
+de	O
+accion	GENRE
+
+peliculas	CONTT
+de	O
+accion	GENRE
+
+peliculas	CONTT
+de	O
+ciencia	GENRE
+ficcion	GENRE
+
+alguna	O
+de	O
+drama	GENRE
+
+alguna	O
+de	O
+comedia	GENRE
+
+
+quiero	O
+ver	O
+drama	GENRE
+
+quiero	O
+ver	O
+aventuras	GENRE
+
+quiero	O
+ver	O
+una	O
+pelicula	CONTT
+de	O
+aventuras	GENRE
+
+quiero	O
+ver	O
+una	O
+pelicula	CONTT
+de	O
+accion	GENRE
 
