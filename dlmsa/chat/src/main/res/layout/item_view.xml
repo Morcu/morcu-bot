@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="280dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#fff">
+
+        <ImageView
+            android:id="@+id/cardImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_above="@+id/cardTitle"
+            android:layout_alignStart="@+id/gridLayout2"
+            android:adjustViewBounds="false" />
+
+        <TextView
+            android:id="@+id/cardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_above="@+id/gridLayout2"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="Dummy"
+            android:textAlignment="viewStart"
+            android:textColor="#000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/cardSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/cardTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="2dp"
+            android:text="sub"
+            android:textColor="#000"
+            android:textSize="12sp" />
+
+        <GridLayout
+            android:id="@+id/gridLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+
+            <Button
+                android:id="@+id/yaVisto"
+                style="@android:style/Widget.Material.Button.Colored"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp"
+                android:text="Mas información"
+                android:textSize="12sp"
+                android:theme="@style/Widget.AppCompat.Button.Borderless.Colored" />
+            <!--
+            <Button
+                android:id="@+id/masSimilares"
+                android:layout_width="82dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:text="+ Similares"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/verAhora"
+                android:layout_width="82dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp"
+                android:text="Ver ahora"
+                android:textSize="10sp" />
+            -->
+        </GridLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

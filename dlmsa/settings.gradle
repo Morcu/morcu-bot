@@ -1,0 +1,1 @@
+include ':app', ':chat', ':model', ':dl', ':emulator', ':speech', ':eventbus'
