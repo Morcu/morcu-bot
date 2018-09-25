@@ -1,7 +1,7 @@
 import { BotBuilder } from '@telefonica/bot-core';
 import * as logger from 'logops';
 import requestPromise from 'request-promise';
-import { getNerResponse, INerOptions, INerResult } from './nerUtils';
+import { getNerResponse, INerOptionsSet, INerOptions, INerResult } from './nerUtils';
 
 export interface IRasaIntent {
     name: string;
@@ -25,21 +25,27 @@ export interface IRasaResult {
     model: string;
 }
 
+const DEF: string = '*';
+
 export class RASARecognizerNER implements BotBuilder.IIntentRecognizer {
     private models: any;
+    private nerOptionsSet: INerOptionsSet;
 
     /**
      * Constructs a new instance of the recognizer.
+     *
+     * @param nerOptionsSet NER options set
      * @param models Either an individual Grammar model used for all utterances
      * or a map of per/locale models conditionally used depending on the locale
      * of the utterance.
      */
-    constructor(models: any) {
+    constructor(nerOptionsSet: INerOptionsSet, models: any) {
         if (typeof models === 'string') {
             this.models = { '*': models };
         } else {
             this.models = (models || {});
         }
+        this.nerOptionsSet = nerOptionsSet;
     }
 
     /**
@@ -60,6 +66,8 @@ export class RASARecognizerNER implements BotBuilder.IIntentRecognizer {
         };
         if (context && context.message && context.message.text) {
             logger.debug('[RASRecognizerNER].recognize__models__', context);
+
+            let locale = context.locale || DEF;
 
             let getResults = (err: Error, data: IRasaResult): void => {
                 if (!err) {
@@ -89,8 +97,10 @@ export class RASARecognizerNER implements BotBuilder.IIntentRecognizer {
                     cb(err, null);
                 }
             };
-            let rasaURl = 'http://rasa:5000';
-            RASARecognizerNER.recognizeRemotelly(context, rasaURl, getResults);
+            //let rasaURl = 'http://rasa:5000';
+            let rasaURl = this.models[locale];
+
+            RASARecognizerNER.recognizeRemotelly(this.nerOptionsSet[locale], context, rasaURl, getResults);
         } else {
             cb(null, result);
         }
@@ -103,16 +113,10 @@ export class RASARecognizerNER implements BotBuilder.IIntentRecognizer {
      * @param callback
      */
 
-     static recognizeRemotelly(context: BotBuilder.IRecognizeContext,
+     static recognizeRemotelly(nerOptions: INerOptions, context: BotBuilder.IRecognizeContext,
         modelUrl: string, callback: (err: Error, data: any) => void) {
 
         logger.debug('[RASRecognizerNER].recognizeRemotelly__message__', context.message);
-
-        let nerOptions: INerOptions = {
-            port: 9191,
-            host: 'ner_client'
-            //host: 'http://ner_client'
-        };
 
         getNerResponse(nerOptions, context.message.text, (err: Error, res: INerResult) => {
             console.log('___NER_RESPONSE__');

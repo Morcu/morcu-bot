@@ -1,24 +1,28 @@
 import { BotBuilder } from '@telefonica/bot-core';
 import * as logger from 'logops';
 import requestPromise from 'request-promise';
-import { getNerResponse, INerOptions, INerResult } from './nerUtils';
+import { getNerResponse, INerOptionsSet, INerOptions, INerResult } from './nerUtils';
 
+const DEF: string = '*';
 
 export class LUISRecognizerNER implements BotBuilder.IIntentRecognizer {
     private models: any;
-
+    private nerOptionsSet: INerOptionsSet;
     /**
      * Constructs a new instance of the recognizer.
+     *
+     * @param nerOptionsSet NER options set
      * @param models Either an individual Grammar model used for all utterances
      * or a map of per/locale models conditionally used depending on the locale
      * of the utterance.
      */
-    constructor(models: any) {
+    constructor(nerOptionsSet: INerOptionsSet, models: any) {
         if (typeof models === 'string') {
             this.models = { '*': models };
         } else {
             this.models = (models || {});
         }
+        this.nerOptionsSet = nerOptionsSet;
     }
 
     /**
@@ -40,6 +44,7 @@ export class LUISRecognizerNER implements BotBuilder.IIntentRecognizer {
         if (context && context.message && context.message.text) {
             logger.debug('[LUISRecognizerNER].recognize__models__', context);
 
+            let locale = context.locale || DEF;
             let getResults = (err: Error, data: BotBuilder.ILuisModelMap): void => {
                 if (!err) {
                     //result = LUISRecognizerNER.convertRasaToLuisModel(data);
@@ -68,9 +73,12 @@ export class LUISRecognizerNER implements BotBuilder.IIntentRecognizer {
                     cb(err, null);
                 }
             };
-            let luisURl = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/979f2e3b-51db-4d70-bded-d97c06c88902' +
-            '?subscription-key=140b5d63529e413f964ba603287bd941&verbose=true&timezoneOffset=0&q=';
-            LUISRecognizerNER.recognizeRemotelly(context, luisURl, getResults);
+            //let luisURl = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/979f2e3b-51db-4d70-bded-d97c06c88902' +
+            //'?subscription-key=140b5d63529e413f964ba603287bd941&verbose=true&timezoneOffset=0&q=';
+            let luisURl = this.models[locale];
+            console.log('__NER_OPTIONS__');
+            console.log(locale, this.nerOptionsSet[locale]);
+            LUISRecognizerNER.recognizeRemotelly(this.nerOptionsSet[locale], context, luisURl, getResults);
         } else {
             cb(null, result);
         }
@@ -78,22 +86,17 @@ export class LUISRecognizerNER implements BotBuilder.IIntentRecognizer {
 
     /**
      *
+     * @param nerOptions
      * @param message
      * @param modelUrl
      * @param callback
      */
-
-     static recognizeRemotelly(context: BotBuilder.IRecognizeContext,
+     static recognizeRemotelly(nerOptions: INerOptions, context: BotBuilder.IRecognizeContext,
         modelUrl: string, callback: (err: Error, data: any) => void) {
 
         logger.debug('[LUISRecognizerNER].recognizeRemotelly__message__', context.message);
-
-        let nerOptions: INerOptions = {
-            port: 9191,
-            host: 'ner_client'
-            //host: 'http://ner_client'
-        };
-
+        console.log('__NER_OPTIONS__');
+        console.log(nerOptions);
         getNerResponse(nerOptions, context.message.text, (err: Error, res: INerResult) => {
             console.log('___NER_RESPONSE__');
             console.log(res);

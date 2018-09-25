@@ -32,14 +32,11 @@ const PERSON_TAG_INDEX = 'jobs';
 const GENRES_TAG = 'genre';
 const GENRES_TAG_INDEX = 'film_genres';
 //Conexion con elasticsearch
-/*
+let inDocker = process.env.RUN_PLACE === 'DOCKER';
+const elastic_host = inDocker ? process.env.COGNITIVE_HOST : process.env.LOCAL_COGNITIVE_HOST;
+
 const esClient = new elasticsearch.Client({
-    host: 'elasticsearch:9200',
-    log: 'error'
-});
-*/
-const esClient = new elasticsearch.Client({
-    host: 'localhost:9200',
+    host: elastic_host,
     log: 'error'
 });
 
@@ -67,7 +64,7 @@ app.get('/cognitiveService/', function (req: any, res: any) {
 app.get('/cognitiveService/status/', function (req: any, res: any) {
     res.send('')
 });
-
+/*
 app.get('/cognitiveService/lit/:lit', function (req: any, res: any) {
     let msgX: BotBuilder.IMessage = {
         type: 'message',
@@ -112,7 +109,7 @@ let queryLiterales = (msg: BotBuilder.IMessage, res: any, enviar: boolean) => {
         return result;
     }
 };
-
+*/
 
 app.get('/cognitiveService/ne/:gen', function (req: any, res: any) {
     ner_and_elastic(req.params.gen, res, true);

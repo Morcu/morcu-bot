@@ -8,15 +8,14 @@ var rp = require('request-promise');
 var _ = require('lodash');
 const base_image_url = 'http://image.tmdb.org/t/p/original/';
 let INTENT_ID = 'saludo';
-
-
-const req_url = 'http://localhost:6789/cognitiveService/getDataFromEntity/';
+let inDocker = process.env.RUN_PLACE === 'DOCKER';
+const req_url = inDocker ? process.env.COGNITIVE_HOST : process.env.LOCAL_COGNITIVE_HOST;
 //const req_url = 'http://cognitive:6789/cognitiveService/ne/';
 const key = '4e894a5bee711efd3c75378759b6d3af';
 const language = 'es';
 const external_source = 'imdb_id';
 const find_url = 'https://api.themoviedb.org/3/find/';
-const recommend_uri = 'http://localhost:5005/';
+const recommend_uri = inDocker ? process.env.RECOMENDADOR_HOST : process.env.LOCAL_RECOMENDADOR_HOST;
 const cognitive_genre = 'genre';
 const cognitive_film_title = 'film_title';
 // This dialog is managed by this discrete steps
@@ -153,8 +152,11 @@ function recommend(session: BotBuilder.Session, args: any, next: Function) {
                                 console.log(item.original_title);
                                 console.log( base_image_url +  item.poster_path);
                                 channelData.attachment.push({
-                                    title: item.original_title,
-                                    image_url: base_image_url +  item.poster_path
+                                    original_title: item.original_title,
+                                    image_url: base_image_url +  item.poster_path,
+                                    sum: item.overview,
+                                    title: item.title,
+                                    date: item.release_date
                                 });
                             });
                             let msgText = new BotBuilder.Message(session)

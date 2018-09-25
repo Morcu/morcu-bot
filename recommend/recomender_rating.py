@@ -33,7 +33,7 @@ def main():
 
     qualified = qualified.sort_values('wr', ascending=False).head(250)
 
-    print(qualified.head(15))
+    #print(qualified.head(15))
 
 
     # Para generos
@@ -41,7 +41,7 @@ def main():
     s.name = 'genre'
     gen_md = md.drop('genres', axis=1).join(s)
 
-    print(build_chart('Romance', gen_md).head(15))
+    print(build_chart('accion', gen_md).head(15))
 
 
 def weighted_rating(x, m, C):

@@ -8,11 +8,12 @@ var rp = require('request-promise');
 var _ = require('lodash');
 const base_image_url = 'http://image.tmdb.org/t/p/original/';
 let INTENT_ID = 'saludo';
+
+let inDocker = process.env.RUN_PLACE === 'DOCKER';
+const req_url = inDocker ? process.env.COGNITIVE_HOST : process.env.LOCAL_COGNITIVE_HOST;
 var MongoClient = require('mongodb').MongoClient;
-var mongo_url = 'mongodb://localhost:27017/';
+var mongo_url = inDocker ? process.env.MONGO_HOST : process.env.LOCAL_MONGO_HOST;
 
-
-const req_url = 'http://localhost:6789/cognitiveService/getDataFromEntity/';
 //const req_url = 'http://cognitive:6789/cognitiveService/ne/';
 const key = '4e894a5bee711efd3c75378759b6d3af';
 const language = 'es';
@@ -114,11 +115,12 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
             let clean_resp = _.flattenDeep(_.remove(resp, null));
             //console.log(clean_resp);
             clean_resp.forEach( (item: any) => {
-                console.log(item.original_title);
-                console.log( base_image_url +  item.poster_path);
                 channelData.attachment.push({
-                    title: item.original_title,
-                    image_url: base_image_url +  item.poster_path
+                    original_title: item.original_title,
+                    image_url: base_image_url +  item.poster_path,
+                    sum: item.overview,
+                    title: item.title,
+                    date: item.release_date
                 });
             });
             let msgText = new BotBuilder.Message(session)
@@ -126,6 +128,7 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
                 directline: channelData
             });
             session.send(msgText);
+
         });
     });
 }

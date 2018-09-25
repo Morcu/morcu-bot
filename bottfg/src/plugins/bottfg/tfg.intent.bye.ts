@@ -4,7 +4,7 @@ import { Sentences, S } from '../../sentences';
 import { mongo_find } from '../../utils';
 import { debug } from 'logops';
 
-let INTENT_ID = 'saludo';
+let INTENT_ID = 'bye';
 
 // This dialog is managed by this discrete steps
 export default [
@@ -31,8 +31,8 @@ function saludar(session: BotBuilder.Session, args: any, next: Function) {
         }
     };
     let content = {
-        text: Sentences.text(session, S.saludos),
-        speak: Sentences.text(session, S.saludos),
+        text: Sentences.text(session, S.despedida),
+        speak: Sentences.text(session, S.despedida),
         actions: [actions]
     };
     let empty_array: any[] = [];

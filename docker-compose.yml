@@ -29,6 +29,10 @@ services:
     links:
       - "ner_client:ner"
       - "elasticsearch:elastic"
+  gram:
+    build: gram/.
+    ports:
+      - 6677:6677
   bot:
     build: bottfg/.
     ports:
@@ -39,6 +43,7 @@ services:
       - "cognitive:cognitive"
       - "recommendador:recommendador"
       - "rasa:rasa"
+      - "gram:gram"
   recommendador:
     build: recommend/.
     ports:
@@ -52,8 +57,8 @@ volumes:
   mongoV:
     driver: local-persist
     driver_opts:
-      mountpoint: /home/morcu/mongo_import_data/
+      mountpoint: /Users/joserg/TFG/mongo_import_data/
   elasticV:
     driver: local-persist
     driver_opts:
-      mountpoint: /home/morcu/es_data/
+      mountpoint: /Users/joserg/TFG/es_data/

@@ -2,7 +2,11 @@ let net = require('net');
 
 export interface INerOptions {
     host: string;
-    port: number;
+    port: string;
+}
+
+export interface INerOptionsSet {
+    [key: string]: INerOptions;
 }
 
 export interface EntityMap {

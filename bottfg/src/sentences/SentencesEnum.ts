@@ -1,4 +1,5 @@
 export enum S {
     sampleUses,
-    saludos
+    saludos,
+    despedida
 }

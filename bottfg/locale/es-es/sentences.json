@@ -9,12 +9,17 @@
     },
     "saludos" : {
         "text": [ 
-            "Hola",
-            "Buenas",
-            "Holi",
-            "Hola soy MorcuBot"
+            
+            "Hola soy MorcuBot, y se mucho de cine, puedes preguntarme algo como: \"tienes la pelicula arrival\", o \"alguna pelicula como interstellar\""
         ],
-        "desc": "una descripción del sentido de la frase"
+        "desc": "frases de saludos"
+    },
+    "despedida" : {
+        "text": [ 
+            
+            "Hasta la vista baby!"
+        ],
+        "desc": "frases de saludos"
     },
 
     "misunderstood": {

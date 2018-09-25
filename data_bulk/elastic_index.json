@@ -1,0 +1,128 @@
+[movie,tvMovie,video, videoGame]
+PUT films
+{
+    "mappings" : {
+        "film" : {
+            "properties" : {
+                "tconst" : { "type" : "text" },
+                "titleType" : { "type" : "text" },
+                "primaryTitle" : { "type" : "text" },
+                "originalTitle" : { "type" : "text" },
+                "isAdult" : { "type" : "boolean" },//or integer
+                "startYear" : { "type" : "integer" },
+                "endYear" : { "type" : "integer" },
+                "runtimeMinutes" : { "type" : "integer" },
+                "genres" : { "type" : "text" },
+            }
+        }
+    }
+}
+
+
+[tvEpisode,tvSeries,tvMiniSeries,PUT series]
+PUT series
+{
+    "mappings" : {
+        "serie" : {
+            "properties" : {
+                "tconst" : { "type" : "text" },
+                "titleType" : { "type" : "text" },
+                "primaryTitle" : { "type" : "text" },
+                "originalTitle" : { "type" : "text" },
+                "isAdult" : { "type" : "boolean" },//or integer
+                "startYear" : { "type" : "integer" },
+                "endYear" : { "type" : "integer" },
+                "runtimeMinutes" : { "type" : "integer" },
+                "genres" : { "type" : "text" },
+            }
+        }
+    }
+}
+
+
+[short,tvShort,tvSpecial]
+PUT others
+{
+    "mappings" : {
+        "other" : {
+            "properties" : {
+                "tconst" : { "type" : "text" },
+                "titleType" : { "type" : "text" },
+                "primaryTitle" : { "type" : "text" },
+                "originalTitle" : { "type" : "text" },
+                "isAdult" : { "type" : "boolean" },//or integer
+                "startYear" : { "type" : "integer" },
+                "endYear" : { "type" : "integer" },
+                "runtimeMinutes" : { "type" : "integer" },
+                "genres" : { "type" : "text" },
+            }
+        }
+    }
+}
+
+
+PUT people
+{
+    "mappings" : {
+        "person" : {
+            "properties" : {
+                "nconst" : { "type" : "text" },
+                "primaryName" : { "type" : "text" },
+                "birthYear" : { "type" : "integer" },
+                "deathYear" : { "type" : "integer" },
+                "primaryProfession" : { "type" : "text" },
+                "knownForTitles" : { "type" : "text" },
+            }
+        }
+    }
+}
+
+
+
+[tvEpisode,tvSeries,tvMiniSeries,PUT series]
+[short,tvShort,tvSpecial]
+[movie,tvMovie,video, videoGame]
+
+
+__primaryProfession__
+soundtrack
+actress
+actor
+writer
+composer
+music_department
+director
+editor
+cinematographer
+producer
+art_director
+miscellaneous
+make_up_department
+assistant_director
+animation_department
+camera_department
+sound_department
+stunts
+special_effects
+production_designer
+editorial_department
+production_manager
+costume_department
+visual_effects
+casting_director
+costume_designer
+set_decorator
+art_department
+casting_department
+location_management
+
+transportation_department
+manager
+executive
+talent_agent
+legal
+publicist
+assistant
+
+
+
