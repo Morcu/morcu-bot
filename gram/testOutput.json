@@ -1,0 +1,941 @@
+__Test de gramáticas__http://localhost:6677__Sun Jul 29 2018 20:08:34 GMT+0200 (CEST)
+{
+    "*": {
+        "resps": [
+            {
+                "msg": "hola",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.greetings",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.greetings",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.greetings",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "neg": {
+        "resps": [
+            {
+                "msg": "no comedia no drama",
+                "response": {
+                    "score": 0.75,
+                    "intent": "tfg.intent.dm.negacion",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.negacion",
+                            "score": 0.75
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.negacion",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "N1",
+                            "type": "tfg.entity.tipoNeg",
+                            "score": 1
+                        },
+                        {
+                            "entity": "E3",
+                            "type": "tfg.entity.tipoElem",
+                            "score": 1
+                        },
+                        {
+                            "entity": "COMEDIA",
+                            "type": "tfg.entity.tipoGenero",
+                            "score": 1
+                        },
+                        {
+                            "entity": "E3",
+                            "type": "tfg.entity.tipoElem",
+                            "score": 1
+                        },
+                        {
+                            "entity": "DRAMA",
+                            "type": "tfg.entity.tipoGenero",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "bas": {
+        "resps": [
+            {
+                "msg": "genial",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.feedback",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.feedback",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.feedback",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "positivo",
+                            "type": "tfg.entity.positivo",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
+__Test de gramáticas__http://localhost:6677__Sun Jul 29 2018 20:20:39 GMT+0200 (CEST)
+{
+    "*": {
+        "resps": [
+            {
+                "msg": "hola",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.greetings",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.greetings",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.greetings",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "adios",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.goodbyes",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.goodbyes",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.goodbyes",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "gracias",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.thankyous",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.thankyous",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.thankyous",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "pon [tef.audio_visual_channel]",
+                "response": {
+                    "score": 0,
+                    "intent": "tfg.int.es_ES.a.tv.channel_switch",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.tv.channel_switch",
+                            "score": 0
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.tv.channel_switch",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "audiovisual_channel",
+                            "type": "tfg.audiovisual_channel",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "neg": {
+        "resps": [
+            {
+                "msg": "no comedia no drama",
+                "response": {
+                    "score": 0.75,
+                    "intent": "tfg.intent.dm.negacion",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.negacion",
+                            "score": 0.75
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.negacion",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "N1",
+                            "type": "tfg.entity.tipoNeg",
+                            "score": 1
+                        },
+                        {
+                            "entity": "E3",
+                            "type": "tfg.entity.tipoElem",
+                            "score": 1
+                        },
+                        {
+                            "entity": "COMEDIA",
+                            "type": "tfg.entity.tipoGenero",
+                            "score": 1
+                        },
+                        {
+                            "entity": "E3",
+                            "type": "tfg.entity.tipoElem",
+                            "score": 1
+                        },
+                        {
+                            "entity": "DRAMA",
+                            "type": "tfg.entity.tipoGenero",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "bas": {
+        "resps": [
+            {
+                "msg": "genial",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.feedback",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.feedback",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.feedback",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "positivo",
+                            "type": "tfg.entity.positivo",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "super",
+                "response": {
+                    "score": 0,
+                    "intent": null,
+                    "intents": [],
+                    "entities": []
+                }
+            },
+            {
+                "msg": "fenomenal",
+                "response": {
+                    "score": 0,
+                    "intent": null,
+                    "intents": [],
+                    "entities": []
+                }
+            }
+        ]
+    }
+}
+__Test de gramáticas__http://localhost:6677__Sun Jul 29 2018 20:22:03 GMT+0200 (CEST)
+{
+    "*": {
+        "resps": [
+            {
+                "msg": "hola",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.greetings",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.greetings",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.greetings",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "adios",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.goodbyes",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.goodbyes",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.goodbyes",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "gracias",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.thankyous",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.thankyous",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.thankyous",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "pon [tef.audio_visual_channel]",
+                "response": {
+                    "score": 0,
+                    "intent": "tfg.int.es_ES.a.tv.channel_switch",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.tv.channel_switch",
+                            "score": 0
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.tv.channel_switch",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "audiovisual_channel",
+                            "type": "tfg.audiovisual_channel",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "neg": {
+        "resps": [
+            {
+                "msg": "no comedia no drama",
+                "response": {
+                    "score": 0.75,
+                    "intent": "tfg.intent.dm.negacion",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.negacion",
+                            "score": 0.75
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.negacion",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "N1",
+                            "type": "tfg.entity.tipoNeg",
+                            "score": 1
+                        },
+                        {
+                            "entity": "E3",
+                            "type": "tfg.entity.tipoElem",
+                            "score": 1
+                        },
+                        {
+                            "entity": "COMEDIA",
+                            "type": "tfg.entity.tipoGenero",
+                            "score": 1
+                        },
+                        {
+                            "entity": "E3",
+                            "type": "tfg.entity.tipoElem",
+                            "score": 1
+                        },
+                        {
+                            "entity": "DRAMA",
+                            "type": "tfg.entity.tipoGenero",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "bas": {
+        "resps": [
+            {
+                "msg": "genial",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.feedback",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.feedback",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.feedback",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "positivo",
+                            "type": "tfg.entity.positivo",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "super",
+                "response": {
+                    "score": 0,
+                    "intent": null,
+                    "intents": [],
+                    "entities": []
+                }
+            },
+            {
+                "msg": "fenomenal",
+                "response": {
+                    "score": 0,
+                    "intent": null,
+                    "intents": [],
+                    "entities": []
+                }
+            }
+        ]
+    }
+}
+__Test de gramáticas__http://localhost:6677__Sun Jul 29 2018 20:25:04 GMT+0200 (CEST)
+{
+    "*": {
+        "resps": [
+            {
+                "msg": "hola",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.greetings",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.greetings",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.greetings",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "adios",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.goodbyes",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.goodbyes",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.goodbyes",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "gracias",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.thankyous",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.thankyous",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.thankyous",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "pon [tef.audio_visual_channel]",
+                "response": {
+                    "score": 0,
+                    "intent": "tfg.int.es_ES.a.tv.channel_switch",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.tv.channel_switch",
+                            "score": 0
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.tv.channel_switch",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "audiovisual_channel",
+                            "type": "tfg.audiovisual_channel",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "neg": {
+        "resps": [
+            {
+                "msg": "no comedia no drama",
+                "response": {
+                    "score": 0.75,
+                    "intent": "tfg.intent.dm.negacion",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.negacion",
+                            "score": 0.75
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.negacion",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "N1",
+                            "type": "tfg.entity.tipoNeg",
+                            "score": 1
+                        },
+                        {
+                            "entity": "E3",
+                            "type": "tfg.entity.tipoElem",
+                            "score": 1
+                        },
+                        {
+                            "entity": "COMEDIA",
+                            "type": "tfg.entity.tipoGenero",
+                            "score": 1
+                        },
+                        {
+                            "entity": "E3",
+                            "type": "tfg.entity.tipoElem",
+                            "score": 1
+                        },
+                        {
+                            "entity": "DRAMA",
+                            "type": "tfg.entity.tipoGenero",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "bas": {
+        "resps": [
+            {
+                "msg": "genial",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.feedback",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.feedback",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.feedback",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "positivo",
+                            "type": "tfg.entity.positivo",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "hola",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.greeting",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.greeting",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.greeting",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "adios",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.bye",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.bye",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.bye",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "chao",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.bye",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.bye",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.bye",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
+__Test de gramáticas__http://localhost:6677__Wed Aug 01 2018 17:15:20 GMT+0200 (CEST)
+{
+    "*": {
+        "resps": [
+            {
+                "msg": "hola",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.greetings",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.greetings",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.greetings",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "adios",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.goodbyes",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.goodbyes",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.goodbyes",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "gracias",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.int.es_ES.a.common.thankyous",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.common.thankyous",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.common.thankyous",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "pon [tef.audio_visual_channel]",
+                "response": {
+                    "score": 0,
+                    "intent": "tfg.int.es_ES.a.tv.channel_switch",
+                    "intents": [
+                        {
+                            "intent": "tfg.int.es_ES.a.tv.channel_switch",
+                            "score": 0
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.int.es_ES.a.tv.channel_switch",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "audiovisual_channel",
+                            "type": "tfg.audiovisual_channel",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "neg": {
+        "resps": [
+            {
+                "msg": "no comedia no drama",
+                "response": {
+                    "score": 0.75,
+                    "intent": "tfg.intent.dm.negacion",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.negacion",
+                            "score": 0.75
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.negacion",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "N1",
+                            "type": "tfg.entity.tipoNeg",
+                            "score": 1
+                        },
+                        {
+                            "entity": "E3",
+                            "type": "tfg.entity.tipoElem",
+                            "score": 1
+                        },
+                        {
+                            "entity": "COMEDIA",
+                            "type": "tfg.entity.tipoGenero",
+                            "score": 1
+                        },
+                        {
+                            "entity": "E3",
+                            "type": "tfg.entity.tipoElem",
+                            "score": 1
+                        },
+                        {
+                            "entity": "DRAMA",
+                            "type": "tfg.entity.tipoGenero",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "bas": {
+        "resps": [
+            {
+                "msg": "genial",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.feedback",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.feedback",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.feedback",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        },
+                        {
+                            "entity": "positivo",
+                            "type": "tfg.entity.positivo",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "hola",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.greeting",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.greeting",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.greeting",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "adios",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.bye",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.bye",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.bye",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "msg": "chao",
+                "response": {
+                    "score": 1,
+                    "intent": "tfg.intent.dm.bye",
+                    "intents": [
+                        {
+                            "intent": "tfg.intent.dm.bye",
+                            "score": 1
+                        }
+                    ],
+                    "entities": [
+                        {
+                            "entity": "tfg.intent.dm.bye",
+                            "type": "tfg.entity.INTENT_INFO",
+                            "score": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

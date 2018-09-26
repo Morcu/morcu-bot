@@ -1,0 +1,32 @@
+{
+    "*" : {
+        "model": "./gen/M6/TFGTV.g4",
+        "ruleParser": "intents",
+        "ruleVisitor": "visitDefault"
+    },
+    "neg" : {
+        "model": "./gen/M6/TFGNeg.g4",
+        "ruleParser": "intents",
+        "ruleVisitor": "visitDefault"
+    },
+    "bas" : {
+        "model": "./gen/M6/TFGBasicos.g4",
+        "ruleParser": "intents",
+        "ruleVisitor": "visitDefault"
+    },
+    "orig" : {
+        "model": "./gen/M6/AURATV.g4",
+        "ruleParser": "intents",
+        "ruleVisitor": "visitDefault"
+    },
+    "origneg" : {
+        "model": "./gen/M6/BCNeg.g4",
+        "ruleParser": "intents",
+        "ruleVisitor": "visitDefault"
+    },
+    "origbas" : {
+        "model": "./gen/M6/BCBasicos.g4",
+        "ruleParser": "intents",
+        "ruleVisitor": "visitDefault"
+    }
+}

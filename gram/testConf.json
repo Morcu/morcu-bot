@@ -1,0 +1,27 @@
+{
+  "outputFile": "./testOutput.json",
+  "modelUrl": "http://localhost:6677",
+  "models": {
+    "*": {
+      "msgs": ["hola", "adios", "gracias", "pon [tef.audio_visual_channel]"]
+    },
+    "neg": {
+      "msgs": ["no comedia no drama"]
+    },
+    "bas": {
+      "msgs": ["genial", "hola", "adios", "chao"]
+    },
+    "orig": {
+      "skip": true,
+      "msgs": ["hola", "adios", "gracias"]
+    },
+    "origneg": {
+      "skip": true,
+      "msgs": ["no comedia no drama"]
+    },
+    "origbas": {
+      "skip": true,
+      "msgs": ["genial", "hola", "adios", "chao"]
+    }
+  }
+}
