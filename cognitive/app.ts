@@ -2,7 +2,7 @@
 import { BotBuilder } from '@telefonica/bot-core';
 import * as logger from 'logops';
 import { Specials, SpecialsResult } from './tcs';
-
+import * as dotenv from 'dotenv';
 const _ = require('lodash');
 const express = require('express');
 const elasticsearch = require('elasticsearch');
@@ -33,10 +33,11 @@ const GENRES_TAG = 'genre';
 const GENRES_TAG_INDEX = 'film_genres';
 //Conexion con elasticsearch
 let inDocker = process.env.RUN_PLACE === 'DOCKER';
-const elastic_host = inDocker ? process.env.COGNITIVE_HOST : process.env.LOCAL_COGNITIVE_HOST;
-
+const elastic_host = inDocker ? process.env.ELASTIC_HOST : process.env.LOCAL_ELASTIC_HOST;
+console.log(process.env.RUN_PLACE)
+console.log(elastic_host || 'elasticsearch:9200');
 const esClient = new elasticsearch.Client({
-    host: elastic_host,
+    host: elastic_host || 'elasticsearch:9200',
     log: 'error'
 });
 
