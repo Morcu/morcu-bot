@@ -163,7 +163,8 @@ function recommend(session: BotBuilder.Session, args: any, next: Function) {
                             .sourceEvent({
                                 directline: channelData
                             });
-                            session.send(msgText);
+                            //session.send(msgText);
+                            session.endDialog(msgText);
                         });
                     })
                     .catch(function (err) {

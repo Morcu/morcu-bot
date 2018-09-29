@@ -127,7 +127,7 @@ function find(session: BotBuilder.Session, args: any, next: Function) {
             .sourceEvent({
                 directline: channelData
             });
-            session.send(msgText);
+            session.endDialog(msgText);
 
         });
     });

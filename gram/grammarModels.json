@@ -28,5 +28,10 @@
         "model": "./gen/M6/BCBasicos.g4",
         "ruleParser": "intents",
         "ruleVisitor": "visitDefault"
+    },
+    "es-es" : {
+        "model": "./gen/M7/TFGGram.g4",
+        "ruleParser": "intents",
+        "ruleVisitor": "visitDefault"
     }
 }

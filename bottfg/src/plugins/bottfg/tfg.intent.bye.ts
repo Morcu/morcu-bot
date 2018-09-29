@@ -49,6 +49,6 @@ function saludar(session: BotBuilder.Session, args: any, next: Function) {
         directline: channelData
     });
 
-    session.send(msgText);
+    session.endDialog(msgText);
     //session.endDialog();
 }
